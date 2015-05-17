@@ -45,6 +45,8 @@ namespace xServer.Forms
             this.ctxtLine = new System.Windows.Forms.ToolStripSeparator();
             this.ctxtRefresh = new System.Windows.Forms.ToolStripMenuItem();
             this.ctxtOpenDirectory = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.zIPDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imgListDirectory = new System.Windows.Forms.ImageList(this.components);
             this.botStrip = new System.Windows.Forms.StatusStrip();
             this.btnOpenDLFolder = new System.Windows.Forms.Button();
@@ -100,28 +102,30 @@ namespace xServer.Forms
             this.ctxtAddToAutostart,
             this.ctxtLine,
             this.ctxtRefresh,
-            this.ctxtOpenDirectory});
+            this.ctxtOpenDirectory,
+            this.toolStripSeparator1,
+            this.zIPDirectoryToolStripMenuItem});
             this.ctxtMenu.Name = "ctxtMenu";
-            this.ctxtMenu.Size = new System.Drawing.Size(240, 176);
+            this.ctxtMenu.Size = new System.Drawing.Size(236, 226);
             // 
             // ctxtDownload
             // 
             this.ctxtDownload.Image = global::xServer.Properties.Resources.download;
             this.ctxtDownload.Name = "ctxtDownload";
-            this.ctxtDownload.Size = new System.Drawing.Size(239, 22);
+            this.ctxtDownload.Size = new System.Drawing.Size(235, 22);
             this.ctxtDownload.Text = "Download";
             this.ctxtDownload.Click += new System.EventHandler(this.ctxtDownload_Click);
             // 
             // ctxtLine2
             // 
             this.ctxtLine2.Name = "ctxtLine2";
-            this.ctxtLine2.Size = new System.Drawing.Size(236, 6);
+            this.ctxtLine2.Size = new System.Drawing.Size(232, 6);
             // 
             // ctxtExecute
             // 
             this.ctxtExecute.Image = global::xServer.Properties.Resources.run;
             this.ctxtExecute.Name = "ctxtExecute";
-            this.ctxtExecute.Size = new System.Drawing.Size(239, 22);
+            this.ctxtExecute.Size = new System.Drawing.Size(235, 22);
             this.ctxtExecute.Text = "Execute";
             this.ctxtExecute.Click += new System.EventHandler(this.ctxtExecute_Click);
             // 
@@ -129,7 +133,7 @@ namespace xServer.Forms
             // 
             this.ctxtRename.Image = global::xServer.Properties.Resources.textfield_rename;
             this.ctxtRename.Name = "ctxtRename";
-            this.ctxtRename.Size = new System.Drawing.Size(239, 22);
+            this.ctxtRename.Size = new System.Drawing.Size(235, 22);
             this.ctxtRename.Text = "Rename";
             this.ctxtRename.Click += new System.EventHandler(this.ctxtRename_Click);
             // 
@@ -137,42 +141,56 @@ namespace xServer.Forms
             // 
             this.ctxtDelete.Image = global::xServer.Properties.Resources.delete;
             this.ctxtDelete.Name = "ctxtDelete";
-            this.ctxtDelete.Size = new System.Drawing.Size(239, 22);
+            this.ctxtDelete.Size = new System.Drawing.Size(235, 22);
             this.ctxtDelete.Text = "Delete";
             this.ctxtDelete.Click += new System.EventHandler(this.ctxtDelete_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(236, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(232, 6);
             // 
             // ctxtAddToAutostart
             // 
             this.ctxtAddToAutostart.Image = global::xServer.Properties.Resources.application_add;
             this.ctxtAddToAutostart.Name = "ctxtAddToAutostart";
-            this.ctxtAddToAutostart.Size = new System.Drawing.Size(239, 22);
+            this.ctxtAddToAutostart.Size = new System.Drawing.Size(235, 22);
             this.ctxtAddToAutostart.Text = "Add to Autostart";
             this.ctxtAddToAutostart.Click += new System.EventHandler(this.ctxtAddToAutostart_Click);
             // 
             // ctxtLine
             // 
             this.ctxtLine.Name = "ctxtLine";
-            this.ctxtLine.Size = new System.Drawing.Size(236, 6);
+            this.ctxtLine.Size = new System.Drawing.Size(232, 6);
             // 
             // ctxtRefresh
             // 
             this.ctxtRefresh.Image = global::xServer.Properties.Resources.refresh;
             this.ctxtRefresh.Name = "ctxtRefresh";
-            this.ctxtRefresh.Size = new System.Drawing.Size(239, 22);
+            this.ctxtRefresh.Size = new System.Drawing.Size(235, 22);
             this.ctxtRefresh.Text = "Refresh";
             this.ctxtRefresh.Click += new System.EventHandler(this.ctxtRefresh_Click);
             // 
             // ctxtOpenDirectory
             // 
+            this.ctxtOpenDirectory.Image = global::xServer.Properties.Resources.terminal;
             this.ctxtOpenDirectory.Name = "ctxtOpenDirectory";
-            this.ctxtOpenDirectory.Size = new System.Drawing.Size(239, 22);
+            this.ctxtOpenDirectory.Size = new System.Drawing.Size(235, 22);
             this.ctxtOpenDirectory.Text = "Open Directory in Remote Shell";
             this.ctxtOpenDirectory.Click += new System.EventHandler(this.ctxtOpenDirectory_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(232, 6);
+            // 
+            // zIPDirectoryToolStripMenuItem
+            // 
+            this.zIPDirectoryToolStripMenuItem.Image = global::xServer.Properties.Resources.zip;
+            this.zIPDirectoryToolStripMenuItem.Name = "zIPDirectoryToolStripMenuItem";
+            this.zIPDirectoryToolStripMenuItem.Size = new System.Drawing.Size(235, 22);
+            this.zIPDirectoryToolStripMenuItem.Text = "ZIP Directory";
+            this.zIPDirectoryToolStripMenuItem.Click += new System.EventHandler(this.zIPDirectoryToolStripMenuItem_Click);
             // 
             // imgListDirectory
             // 
@@ -321,13 +339,13 @@ namespace xServer.Forms
             this.ctxtMenu2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ctxtCancel});
             this.ctxtMenu2.Name = "ctxtMenu2";
-            this.ctxtMenu2.Size = new System.Drawing.Size(111, 26);
+            this.ctxtMenu2.Size = new System.Drawing.Size(109, 26);
             // 
             // ctxtCancel
             // 
             this.ctxtCancel.Image = global::xServer.Properties.Resources.cancel;
             this.ctxtCancel.Name = "ctxtCancel";
-            this.ctxtCancel.Size = new System.Drawing.Size(110, 22);
+            this.ctxtCancel.Size = new System.Drawing.Size(108, 22);
             this.ctxtCancel.Text = "Cancel";
             this.ctxtCancel.Click += new System.EventHandler(this.ctxtCancel_Click);
             // 
@@ -397,5 +415,7 @@ namespace xServer.Forms
         private System.Windows.Forms.ContextMenuStrip ctxtMenu2;
         private System.Windows.Forms.ToolStripMenuItem ctxtCancel;
         private System.Windows.Forms.ToolStripMenuItem ctxtOpenDirectory;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem zIPDirectoryToolStripMenuItem;
     }
 }

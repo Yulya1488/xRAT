@@ -123,6 +123,7 @@
     <Compile Include="Core\Packets\ServerPackets\VisitWebsite.cs" />
     <Compile Include="Core\Packets\ServerPackets\InitializeCommand.cs" />
     <Compile Include="Core\Packets\ServerPackets\Reconnect.cs" />
+    <Compile Include="Core\Packets\ServerPackets\ZipFile.cs" />
     <Compile Include="Core\Packets\UnknownPacket.cs" />
     <Compile Include="Core\ProtoBuf\BclHelpers.cs" />
     <Compile Include="Core\ProtoBuf\BufferExtension.cs" />
@@ -264,6 +265,12 @@
     <Compile Include="Controls\ListViewEx.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Forms\FrmOnJoin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmOnJoin.Designer.cs">
+      <DependentUpon>FrmOnJoin.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FrmRemoteDesktop.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -367,6 +374,9 @@
     <EmbeddedResource Include="Forms\FrmMain.resx">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmOnJoin.resx">
+      <DependentUpon>FrmOnJoin.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FrmRemoteDesktop.resx">
       <DependentUpon>FrmRemoteDesktop.cs</DependentUpon>
     </EmbeddedResource>
@@ -430,6 +440,7 @@
   <ItemGroup>
     <None Include="images\keyboard_add.png" />
     <None Include="images\keyboard_delete.png" />
+    <None Include="images\zip.png" />
     <Content Include="xRAT-64x64.ico" />
   </ItemGroup>
   <ItemGroup>

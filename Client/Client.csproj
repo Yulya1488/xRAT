@@ -53,6 +53,7 @@
     <Compile Include="Core\Commands\SurveillanceHandler.cs" />
     <Compile Include="Core\Commands\SystemHandler.cs" />
     <Compile Include="Core\Compression\SafeQuickLZ.cs" />
+    <Compile Include="Core\Compression\ZipStorer.cs" />
     <Compile Include="Core\Elevation\CommandButton.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -106,6 +107,7 @@
     <Compile Include="Core\Packets\ServerPackets\VisitWebsite.cs" />
     <Compile Include="Core\Packets\ServerPackets\MouseClick.cs" />
     <Compile Include="Core\Packets\ServerPackets\StartProcess.cs" />
+    <Compile Include="Core\Packets\ServerPackets\ZipFile.cs" />
     <Compile Include="Core\ProtoBuf\CallbackAttributes.cs" />
     <Compile Include="Core\ProtoBuf\Extensible.cs" />
     <Compile Include="Core\ProtoBuf\ExtensibleUtil.cs" />

@@ -118,6 +118,7 @@ namespace xServer.Forms
                 typeof (Core.Packets.ServerPackets.Drives),
                 typeof (Core.Packets.ServerPackets.Directory),
                 typeof (Core.Packets.ServerPackets.DownloadFile),
+                typeof (Core.Packets.ServerPackets.ZipFile),
                 typeof (Core.Packets.ServerPackets.MouseClick),
                 typeof (Core.Packets.ServerPackets.KeyPress),
                 typeof (Core.Packets.ServerPackets.GetSystemInfo),

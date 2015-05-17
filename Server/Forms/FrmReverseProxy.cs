@@ -29,7 +29,7 @@ namespace xServer.Forms
             {
                 this.Text = string.Format("xRAT 2.0 - Reverse Proxy [Load-Balancer is active]");
 
-                lblLoadBalance.Text = "The Load Balancer is active, " + clients.Length + " clients will be used as proxy\r\nKeep refreshing at www.ipchicken.com to see if your ip address will keep changing, if so, it works";
+                lblLoadBalance.Text = "The Load Balancer is active, " + clients.Length + " clients will be used as proxy\r\nKeep refreshing at whoer.net to see if your ip address will keep changing, if so, it works";
 
             }
             else if (clients.Length == 1)
