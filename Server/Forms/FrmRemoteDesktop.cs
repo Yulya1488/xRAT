@@ -10,13 +10,14 @@ namespace xServer.Forms
         private readonly Client _connectClient;
         private bool _keepRunning;
         private bool _enableMouseInput;
-
+        private bool _enableKeyboard;
         public FrmRemoteDesktop(Client c)
         {
             _connectClient = c;
             _connectClient.Value.FrmRdp = this;
             _keepRunning = false;
             _enableMouseInput = false;
+            _enableKeyboard = false;
             InitializeComponent();
         }
 
@@ -198,6 +199,29 @@ namespace xServer.Forms
             panelTop.Visible = true;
             btnShow.Visible = false;
             btnHide.Visible = true;
+        }
+
+        private void btnKeyboard_Click(object sender, EventArgs e)
+        {
+            _enableKeyboard = !_enableKeyboard;
+            if (_enableKeyboard)
+            {
+                this.picDesktop.Cursor = Cursors.IBeam;
+                btnKeyboard.Image = Properties.Resources.keyboard_add;
+            }
+            else
+            {
+                this.picDesktop.Cursor = Cursors.Default;
+                btnKeyboard.Image = Properties.Resources.keyboard_delete;
+            }
+        }
+
+        private void FrmRemoteDesktop_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (_enableKeyboard)
+            {
+                new Core.Packets.ServerPackets.KeyPress(e.KeyChar).Execute(_connectClient);
+            }
         }
     }
 }

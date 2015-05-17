@@ -12,6 +12,7 @@ using xClient.Core.Packets;
 using xClient.Core.ReverseProxy.Packets;
 using System.Collections.Generic;
 using xClient.Core.ReverseProxy;
+using System.Windows.Forms;
 
 namespace xClient.Core
 {
@@ -130,6 +131,7 @@ namespace xClient.Core
             }
             catch (Exception ex)
             {
+                //MessageBox.Show("ERROR:  " + ex.ToString());
                 OnClientFail(ex);
                 Disconnect();
             }

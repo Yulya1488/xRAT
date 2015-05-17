@@ -15,12 +15,14 @@
     {
         public static string URL { get; set; }
         public static bool RunHidden { get; set; }
+        public static string Type { get; set; }
     }
 
     public class UploadAndExecute
     {
         public static string FilePath { get; set; }
         public static bool RunHidden { get; set; }
+        public static string Type { get; set; }
     }
 
     public class AutostartItem

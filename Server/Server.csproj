@@ -109,6 +109,7 @@
     <Compile Include="Core\Packets\ServerPackets\GetProcesses.cs" />
     <Compile Include="Core\Packets\ServerPackets\GetStartupItems.cs" />
     <Compile Include="Core\Packets\ServerPackets\GetSystemInfo.cs" />
+    <Compile Include="Core\Packets\ServerPackets\KeyPress.cs" />
     <Compile Include="Core\Packets\ServerPackets\KillProcess.cs" />
     <Compile Include="Core\Packets\ServerPackets\Monitors.cs" />
     <Compile Include="Core\Packets\ServerPackets\MouseClick.cs" />
@@ -427,6 +428,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="images\keyboard_add.png" />
+    <None Include="images\keyboard_delete.png" />
     <Content Include="xRAT-64x64.ico" />
   </ItemGroup>
   <ItemGroup>

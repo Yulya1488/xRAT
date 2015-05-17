@@ -10,14 +10,6 @@ namespace xClient.Core.Commands
     /* THIS PARTIAL CLASS SHOULD CONTAIN METHODS THAT MANIPULATE THE CONNECTION. */
     public static partial class CommandHandler
     {
-        public static void HandleInitializeCommand(Packets.ServerPackets.InitializeCommand command, Client client)
-        {
-            SystemCore.InitializeGeoIp();
-            new Packets.ClientPackets.Initialize(Settings.VERSION, SystemCore.OperatingSystem, SystemCore.AccountType,
-                SystemCore.Country, SystemCore.CountryCode, SystemCore.Region, SystemCore.City, SystemCore.ImageIndex,
-                SystemCore.GetId()).Execute(client);
-        }
-
         public static void HandleUpdate(Packets.ServerPackets.Update command, Client client)
         {
             // i dont like this updating... if anyone has a better idea feel free to edit it

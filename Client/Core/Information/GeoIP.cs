@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Net;
+using System.Windows.Forms;
 using System.Xml;
 
 namespace xClient.Core.Information
@@ -21,6 +22,7 @@ namespace xClient.Core.Information
                 request.Proxy = null;
                 request.Timeout = 5000;
 
+               
                 using (HttpWebResponse response = (HttpWebResponse) request.GetResponse())
                 {
                     using (Stream dataStream = response.GetResponseStream())
@@ -28,6 +30,14 @@ namespace xClient.Core.Information
                         using (StreamReader reader = new StreamReader(dataStream))
                         {
                             string responseString = reader.ReadToEnd();
+
+
+                            // CHANGED
+
+                            //MessageBox.Show(responseString);
+
+
+
 
                             XmlDocument doc = new XmlDocument();
                             doc.LoadXml(responseString);

@@ -269,8 +269,9 @@ namespace xServer.Forms
                 using (SaveFileDialog sfd = new SaveFileDialog())
                 {
                     sfd.Filter = "EXE Files *.exe|*.exe";
-                    sfd.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-                    sfd.FileName = "Client-built.exe";
+                    sfd.RestoreDirectory = true;
+                    //sfd.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                    sfd.FileName = "";
                     if (sfd.ShowDialog() == DialogResult.OK)
                         output = sfd.FileName;
                 }
