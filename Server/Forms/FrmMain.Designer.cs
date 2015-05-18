@@ -60,12 +60,12 @@ namespace xServer.Forms
             this.ctxtWebFile = new System.Windows.Forms.ToolStripMenuItem();
             this.ctxtVisitWebsite = new System.Windows.Forms.ToolStripMenuItem();
             this.ctxtShowMessagebox = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.selectAllClientsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.botStrip = new System.Windows.Forms.StatusStrip();
             this.botListen = new System.Windows.Forms.ToolStripStatusLabel();
             this.imgFlags = new System.Windows.Forms.ImageList(this.components);
             this.nIcon = new System.Windows.Forms.NotifyIcon(this.components);
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.selectAllClientsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lstClients = new xServer.Controls.ListViewEx();
             this.hIP = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.hSocket = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -81,7 +81,9 @@ namespace xServer.Forms
             this.menuSettings = new System.Windows.Forms.MenuItem();
             this.menuBuilder = new System.Windows.Forms.MenuItem();
             this.menuStatistics = new System.Windows.Forms.MenuItem();
+            this.menuJoinCommands = new System.Windows.Forms.MenuItem();
             this.menuAbout = new System.Windows.Forms.MenuItem();
+            this.runJoinCommandsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ctxtMenu.SuspendLayout();
             this.botStrip.SuspendLayout();
             this.SuspendLayout();
@@ -114,7 +116,7 @@ namespace xServer.Forms
             // 
             this.ctxtUpdate.Image = ((System.Drawing.Image)(resources.GetObject("ctxtUpdate.Image")));
             this.ctxtUpdate.Name = "ctxtUpdate";
-            this.ctxtUpdate.Size = new System.Drawing.Size(152, 22);
+            this.ctxtUpdate.Size = new System.Drawing.Size(131, 22);
             this.ctxtUpdate.Text = "Update";
             this.ctxtUpdate.Click += new System.EventHandler(this.ctxtUpdate_Click);
             // 
@@ -122,7 +124,7 @@ namespace xServer.Forms
             // 
             this.ctxtReconnect.Image = ((System.Drawing.Image)(resources.GetObject("ctxtReconnect.Image")));
             this.ctxtReconnect.Name = "ctxtReconnect";
-            this.ctxtReconnect.Size = new System.Drawing.Size(152, 22);
+            this.ctxtReconnect.Size = new System.Drawing.Size(131, 22);
             this.ctxtReconnect.Text = "Reconnect";
             this.ctxtReconnect.Click += new System.EventHandler(this.ctxtReconnect_Click);
             // 
@@ -130,7 +132,7 @@ namespace xServer.Forms
             // 
             this.ctxtDisconnect.Image = ((System.Drawing.Image)(resources.GetObject("ctxtDisconnect.Image")));
             this.ctxtDisconnect.Name = "ctxtDisconnect";
-            this.ctxtDisconnect.Size = new System.Drawing.Size(152, 22);
+            this.ctxtDisconnect.Size = new System.Drawing.Size(131, 22);
             this.ctxtDisconnect.Text = "Disconnect";
             this.ctxtDisconnect.Click += new System.EventHandler(this.ctxtDisconnect_Click);
             // 
@@ -138,7 +140,7 @@ namespace xServer.Forms
             // 
             this.ctxtUninstall.Image = ((System.Drawing.Image)(resources.GetObject("ctxtUninstall.Image")));
             this.ctxtUninstall.Name = "ctxtUninstall";
-            this.ctxtUninstall.Size = new System.Drawing.Size(152, 22);
+            this.ctxtUninstall.Size = new System.Drawing.Size(131, 22);
             this.ctxtUninstall.Text = "Uninstall";
             this.ctxtUninstall.Click += new System.EventHandler(this.ctxtUninstall_Click);
             // 
@@ -225,7 +227,7 @@ namespace xServer.Forms
             // 
             this.ctxtShutdown.Image = global::xServer.Properties.Resources.shutdown;
             this.ctxtShutdown.Name = "ctxtShutdown";
-            this.ctxtShutdown.Size = new System.Drawing.Size(152, 22);
+            this.ctxtShutdown.Size = new System.Drawing.Size(128, 22);
             this.ctxtShutdown.Text = "Shutdown";
             this.ctxtShutdown.Click += new System.EventHandler(this.ctxtShutdown_Click);
             // 
@@ -233,7 +235,7 @@ namespace xServer.Forms
             // 
             this.ctxtRestart.Image = global::xServer.Properties.Resources.restart;
             this.ctxtRestart.Name = "ctxtRestart";
-            this.ctxtRestart.Size = new System.Drawing.Size(152, 22);
+            this.ctxtRestart.Size = new System.Drawing.Size(128, 22);
             this.ctxtRestart.Text = "Restart";
             this.ctxtRestart.Click += new System.EventHandler(this.ctxtRestart_Click);
             // 
@@ -241,7 +243,7 @@ namespace xServer.Forms
             // 
             this.ctxtStandby.Image = global::xServer.Properties.Resources.standby;
             this.ctxtStandby.Name = "ctxtStandby";
-            this.ctxtStandby.Size = new System.Drawing.Size(152, 22);
+            this.ctxtStandby.Size = new System.Drawing.Size(128, 22);
             this.ctxtStandby.Text = "Standby";
             this.ctxtStandby.Click += new System.EventHandler(this.ctxtStandby_Click);
             // 
@@ -285,7 +287,8 @@ namespace xServer.Forms
             this.ctxtMiscellaneous.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ctxtRemoteExecute,
             this.ctxtVisitWebsite,
-            this.ctxtShowMessagebox});
+            this.ctxtShowMessagebox,
+            this.runJoinCommandsToolStripMenuItem});
             this.ctxtMiscellaneous.Image = ((System.Drawing.Image)(resources.GetObject("ctxtMiscellaneous.Image")));
             this.ctxtMiscellaneous.Name = "ctxtMiscellaneous";
             this.ctxtMiscellaneous.Size = new System.Drawing.Size(158, 22);
@@ -298,14 +301,14 @@ namespace xServer.Forms
             this.ctxtWebFile});
             this.ctxtRemoteExecute.Image = global::xServer.Properties.Resources.lightning;
             this.ctxtRemoteExecute.Name = "ctxtRemoteExecute";
-            this.ctxtRemoteExecute.Size = new System.Drawing.Size(170, 22);
+            this.ctxtRemoteExecute.Size = new System.Drawing.Size(179, 22);
             this.ctxtRemoteExecute.Text = "Remote Execute";
             // 
             // ctxtLocalFile
             // 
             this.ctxtLocalFile.Image = global::xServer.Properties.Resources.drive_go;
             this.ctxtLocalFile.Name = "ctxtLocalFile";
-            this.ctxtLocalFile.Size = new System.Drawing.Size(152, 22);
+            this.ctxtLocalFile.Size = new System.Drawing.Size(130, 22);
             this.ctxtLocalFile.Text = "Local File...";
             this.ctxtLocalFile.Click += new System.EventHandler(this.ctxtLocalFile_Click);
             // 
@@ -313,7 +316,7 @@ namespace xServer.Forms
             // 
             this.ctxtWebFile.Image = global::xServer.Properties.Resources.world_go;
             this.ctxtWebFile.Name = "ctxtWebFile";
-            this.ctxtWebFile.Size = new System.Drawing.Size(152, 22);
+            this.ctxtWebFile.Size = new System.Drawing.Size(130, 22);
             this.ctxtWebFile.Text = "Web File...";
             this.ctxtWebFile.Click += new System.EventHandler(this.ctxtWebFile_Click);
             // 
@@ -321,7 +324,7 @@ namespace xServer.Forms
             // 
             this.ctxtVisitWebsite.Image = ((System.Drawing.Image)(resources.GetObject("ctxtVisitWebsite.Image")));
             this.ctxtVisitWebsite.Name = "ctxtVisitWebsite";
-            this.ctxtVisitWebsite.Size = new System.Drawing.Size(170, 22);
+            this.ctxtVisitWebsite.Size = new System.Drawing.Size(179, 22);
             this.ctxtVisitWebsite.Text = "Visit Website";
             this.ctxtVisitWebsite.Click += new System.EventHandler(this.ctxtVisitWebsite_Click);
             // 
@@ -329,9 +332,21 @@ namespace xServer.Forms
             // 
             this.ctxtShowMessagebox.Image = ((System.Drawing.Image)(resources.GetObject("ctxtShowMessagebox.Image")));
             this.ctxtShowMessagebox.Name = "ctxtShowMessagebox";
-            this.ctxtShowMessagebox.Size = new System.Drawing.Size(170, 22);
+            this.ctxtShowMessagebox.Size = new System.Drawing.Size(179, 22);
             this.ctxtShowMessagebox.Text = "Show Messagebox";
             this.ctxtShowMessagebox.Click += new System.EventHandler(this.ctxtShowMessagebox_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(155, 6);
+            // 
+            // selectAllClientsToolStripMenuItem
+            // 
+            this.selectAllClientsToolStripMenuItem.Name = "selectAllClientsToolStripMenuItem";
+            this.selectAllClientsToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.selectAllClientsToolStripMenuItem.Text = "Select All Clients";
+            this.selectAllClientsToolStripMenuItem.Click += new System.EventHandler(this.selectAllClientsToolStripMenuItem_Click);
             // 
             // botStrip
             // 
@@ -609,18 +624,6 @@ namespace xServer.Forms
             this.nIcon.Visible = true;
             this.nIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.nIcon_MouseDoubleClick);
             // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(155, 6);
-            // 
-            // selectAllClientsToolStripMenuItem
-            // 
-            this.selectAllClientsToolStripMenuItem.Name = "selectAllClientsToolStripMenuItem";
-            this.selectAllClientsToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
-            this.selectAllClientsToolStripMenuItem.Text = "Select All Clients";
-            this.selectAllClientsToolStripMenuItem.Click += new System.EventHandler(this.selectAllClientsToolStripMenuItem_Click);
-            // 
             // lstClients
             // 
             this.lstClients.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -693,6 +696,7 @@ namespace xServer.Forms
             this.menuSettings,
             this.menuBuilder,
             this.menuStatistics,
+            this.menuJoinCommands,
             this.menuAbout});
             // 
             // menuFile
@@ -726,11 +730,25 @@ namespace xServer.Forms
             this.menuStatistics.Text = "Statistics";
             this.menuStatistics.Click += new System.EventHandler(this.menuStatistics_Click);
             // 
+            // menuJoinCommands
+            // 
+            this.menuJoinCommands.Index = 4;
+            this.menuJoinCommands.Text = "Join Commands";
+            this.menuJoinCommands.Click += new System.EventHandler(this.menuJoinCommands_Click);
+            // 
             // menuAbout
             // 
-            this.menuAbout.Index = 4;
+            this.menuAbout.Index = 5;
             this.menuAbout.Text = "About";
             this.menuAbout.Click += new System.EventHandler(this.menuAbout_Click);
+            // 
+            // runJoinCommandsToolStripMenuItem
+            // 
+            this.runJoinCommandsToolStripMenuItem.Image = global::xServer.Properties.Resources.refresh;
+            this.runJoinCommandsToolStripMenuItem.Name = "runJoinCommandsToolStripMenuItem";
+            this.runJoinCommandsToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.runJoinCommandsToolStripMenuItem.Text = "Run Join Commands";
+            this.runJoinCommandsToolStripMenuItem.Click += new System.EventHandler(this.runJoinCommandsToolStripMenuItem_Click);
             // 
             // FrmMain
             // 
@@ -808,6 +826,8 @@ namespace xServer.Forms
         private System.Windows.Forms.ToolStripMenuItem ctxtReverseProxy;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem selectAllClientsToolStripMenuItem;
+        private System.Windows.Forms.MenuItem menuJoinCommands;
+        private System.Windows.Forms.ToolStripMenuItem runJoinCommandsToolStripMenuItem;
     }
 }
 
