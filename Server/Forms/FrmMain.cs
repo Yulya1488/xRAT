@@ -54,6 +54,11 @@ namespace xServer.Forms
 
         public FrmMain()
         {
+            if (xServer.Properties.Settings.Default.onJoin == null)
+            {
+                xServer.Properties.Settings.Default.onJoin = "";
+                xServer.Properties.Settings.Default.Save();
+            }
             Instance = this;
 
             ReadSettings();

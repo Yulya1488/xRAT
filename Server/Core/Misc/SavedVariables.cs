@@ -40,7 +40,10 @@ namespace xServer.Core.Misc
         public static void LoadFromSettings()
         {
             if (xServer.Properties.Settings.Default.onJoin == null)
+            {
                 xServer.Properties.Settings.Default.onJoin = "";
+                xServer.Properties.Settings.Default.Save();
+            }
             if (xServer.Properties.Settings.Default.onJoin == "")
                 return;
             string[] data = xServer.Properties.Settings.Default.onJoin.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
