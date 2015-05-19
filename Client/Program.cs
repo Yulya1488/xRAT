@@ -208,9 +208,20 @@ namespace xClient
         private static void Disconnect(bool reconnect = false)
         {
             if (reconnect)
-                CommandHandler.CloseShell();
+            {
+                try
+                {
+                    CommandHandler.CloseShell();
+                }
+                catch (Exception)
+                {
+                    SystemCore.Disconnect = true;
+                }
+            }
             else
+            {
                 SystemCore.Disconnect = true;
+            }
             ConnectClient.Disconnect();
         }
 

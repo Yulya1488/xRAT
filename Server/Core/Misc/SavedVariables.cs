@@ -36,6 +36,7 @@ namespace xServer.Core.Misc
 
     public class OnJoinCommands
     {
+        public static Random rand = new Random();
         public static List<Core.Misc.OnJoinCommand> MainList = new List<OnJoinCommand>();
         public static void LoadFromSettings()
         {
@@ -88,13 +89,15 @@ namespace xServer.Core.Misc
             xServer.Properties.Settings.Default.onJoin = final;
             xServer.Properties.Settings.Default.Save();
         }
-        public static Dictionary<string, string> ToDictionary()
+        public static Dictionary<int, Dictionary<string, string>> ToDictionary()
         {
-            Dictionary<string, string> ret = new Dictionary<string, string>();
+            Dictionary<int, Dictionary<string, string>> ret = new Dictionary<int, Dictionary<string, string>>();
 
             foreach (OnJoinCommand cmd in MainList)
             {
-                ret.Add(cmd.Type.ToString(), cmd.Value.ToString());
+                Dictionary<string, string> data = new Dictionary<string,string>();
+                data.Add(cmd.Type.ToString(), cmd.Value.ToString());
+                ret.Add(rand.Next(int.MaxValue), data);
             }
             return ret;
         }

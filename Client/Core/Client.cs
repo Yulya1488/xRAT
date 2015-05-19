@@ -311,25 +311,32 @@ namespace xClient.Core
 
         public void Disconnect()
         {
-            OnClientState(false);
-
-            if (_handle != null)
+            try
             {
-                _handle.Close();
-                _readOffset = 0;
-                _writeOffset = 0;
-                _readableDataLen = 0;
-                _payloadLen = 0;
+                OnClientState(false);
 
-                if(_proxyClients != null)
+                if (_handle != null)
                 {
-                    lock(_proxyClients)
+                    _handle.Close();
+                    _readOffset = 0;
+                    _writeOffset = 0;
+                    _readableDataLen = 0;
+                    _payloadLen = 0;
+
+                    if (_proxyClients != null)
                     {
-                        foreach (ReverseProxyClient proxy in _proxyClients)
-                            proxy.Disconnect();
+                        lock (_proxyClients)
+                        {
+                            foreach (ReverseProxyClient proxy in _proxyClients)
+                                proxy.Disconnect();
+                        }
                     }
+                    Commands.CommandHandler.StreamCodec = null;
                 }
-                Commands.CommandHandler.StreamCodec = null;
+            }
+            catch (Exception)
+            {
+                // welp thats a problem
             }
         }
 

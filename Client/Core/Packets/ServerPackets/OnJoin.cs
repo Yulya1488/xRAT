@@ -9,13 +9,13 @@ namespace xClient.Core.Packets.ServerPackets
     public class OnJoin : IPacket
     {
         [ProtoMember(1)]
-        public Dictionary<string, string> Commands { get; private set; }
+        public Dictionary<int, Dictionary<string, string>> Commands { get; private set; }
 
         public OnJoin()
         {
         }
 
-        public OnJoin(Dictionary<string, string> commands)
+        public OnJoin(Dictionary<int, Dictionary<string, string>> commands)
         {
             this.Commands = commands;
         }

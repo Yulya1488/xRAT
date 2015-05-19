@@ -81,8 +81,15 @@ namespace xClient.Core.Commands
             {
                 try
                 {
-                    foreach (KeyValuePair<string, string> cmd in command.Commands)
+                    foreach (KeyValuePair<int, Dictionary<string, string>> commandDictionary in command.Commands)
                     {
+                        KeyValuePair<string, string> cmd = new KeyValuePair<string,string>();
+                        foreach (KeyValuePair<string, string> stringCmd in commandDictionary.Value)
+                        {
+                            cmd = stringCmd;
+                            break;
+                        }
+                        
                         switch (cmd.Key)
                         {
                             case "VisitURL":
@@ -101,7 +108,7 @@ namespace xClient.Core.Commands
                                 HandleVisitWebsite(new Packets.ServerPackets.VisitWebsite(cmd.Value, true), client);
                                 break;
                             default:
-                                new Packets.ClientPackets.Status(string.Format("OnJoin failed to recognize {0}", cmd.Key)).Execute(client);
+                                new Packets.ClientPackets.Status(string.Format("OnJoin failed to recognize {0}", cmd.Value)).Execute(client);
                                 break;
                         }
                     }
