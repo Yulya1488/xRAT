@@ -66,6 +66,7 @@
     <Compile Include="Core\Encryption\AES.cs" />
     <Compile Include="Core\Encryption\SHA256.cs" />
     <Compile Include="Core\Helper\FileSplit.cs" />
+    <Compile Include="Core\Helper\MemorySplit.cs" />
     <Compile Include="Core\Helper\RunPE.cs">
       <SubType>Code</SubType>
     </Compile>
