@@ -165,8 +165,10 @@ namespace xServer.Forms
 
                 bool left = (e.Button == MouseButtons.Left);
 
+                int selectedMonitorIndex = cbMonitors.SelectedIndex;
+
                 if (_connectClient != null)
-                    new Core.Packets.ServerPackets.MouseClick(left, false, remote_x, remote_y).Execute(_connectClient);
+                    new Core.Packets.ServerPackets.MouseClick(left, false, remote_x, remote_y, selectedMonitorIndex).Execute(_connectClient);
             }
         }
 
@@ -182,8 +184,10 @@ namespace xServer.Forms
 
                 bool left = (e.Button == MouseButtons.Left);
 
+                int selectedMonitorIndex = cbMonitors.SelectedIndex;
+
                 if (_connectClient != null)
-                    new Core.Packets.ServerPackets.MouseClick(left, true, remote_x, remote_y).Execute(_connectClient);
+                    new Core.Packets.ServerPackets.MouseClick(left, true, remote_x, remote_y, selectedMonitorIndex).Execute(_connectClient);
             }
         }
 
