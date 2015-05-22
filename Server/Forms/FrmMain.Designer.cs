@@ -60,6 +60,7 @@ namespace xServer.Forms
             this.ctxtWebFile = new System.Windows.Forms.ToolStripMenuItem();
             this.ctxtVisitWebsite = new System.Windows.Forms.ToolStripMenuItem();
             this.ctxtShowMessagebox = new System.Windows.Forms.ToolStripMenuItem();
+            this.runJoinCommandsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.selectAllClientsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.botStrip = new System.Windows.Forms.StatusStrip();
@@ -68,6 +69,7 @@ namespace xServer.Forms
             this.nIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.lstClients = new xServer.Controls.ListViewEx();
             this.hIP = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.hClientID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.hSocket = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.hVersion = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.hStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -83,7 +85,6 @@ namespace xServer.Forms
             this.menuStatistics = new System.Windows.Forms.MenuItem();
             this.menuJoinCommands = new System.Windows.Forms.MenuItem();
             this.menuAbout = new System.Windows.Forms.MenuItem();
-            this.runJoinCommandsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ctxtMenu.SuspendLayout();
             this.botStrip.SuspendLayout();
             this.SuspendLayout();
@@ -98,7 +99,7 @@ namespace xServer.Forms
             this.toolStripSeparator1,
             this.selectAllClientsToolStripMenuItem});
             this.ctxtMenu.Name = "ctxtMenu";
-            this.ctxtMenu.Size = new System.Drawing.Size(159, 142);
+            this.ctxtMenu.Size = new System.Drawing.Size(159, 120);
             // 
             // ctxtConnection
             // 
@@ -335,6 +336,14 @@ namespace xServer.Forms
             this.ctxtShowMessagebox.Size = new System.Drawing.Size(179, 22);
             this.ctxtShowMessagebox.Text = "Show Messagebox";
             this.ctxtShowMessagebox.Click += new System.EventHandler(this.ctxtShowMessagebox_Click);
+            // 
+            // runJoinCommandsToolStripMenuItem
+            // 
+            this.runJoinCommandsToolStripMenuItem.Image = global::xServer.Properties.Resources.refresh;
+            this.runJoinCommandsToolStripMenuItem.Name = "runJoinCommandsToolStripMenuItem";
+            this.runJoinCommandsToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.runJoinCommandsToolStripMenuItem.Text = "Run Join Commands";
+            this.runJoinCommandsToolStripMenuItem.Click += new System.EventHandler(this.runJoinCommandsToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
@@ -628,6 +637,7 @@ namespace xServer.Forms
             // 
             this.lstClients.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.hIP,
+            this.hClientID,
             this.hSocket,
             this.hVersion,
             this.hStatus,
@@ -652,40 +662,54 @@ namespace xServer.Forms
             // 
             // hIP
             // 
+            this.hIP.Tag = "Text";
             this.hIP.Text = "IP Address";
             this.hIP.Width = 112;
             // 
+            // hClientID
+            // 
+            this.hClientID.Tag = "Text";
+            this.hClientID.Text = "Client ID";
+            this.hClientID.Width = 75;
+            // 
             // hSocket
             // 
+            this.hSocket.Tag = "Numeric";
             this.hSocket.Text = "Socket";
             // 
             // hVersion
             // 
+            this.hVersion.Tag = "Text";
             this.hVersion.Text = "Version";
             this.hVersion.Width = 66;
             // 
             // hStatus
             // 
+            this.hStatus.Tag = "Text";
             this.hStatus.Text = "Status";
             this.hStatus.Width = 78;
             // 
             // hUserStatus
             // 
+            this.hUserStatus.Tag = "Text";
             this.hUserStatus.Text = "User Status";
             this.hUserStatus.Width = 72;
             // 
             // hCountry
             // 
+            this.hCountry.Tag = "Text";
             this.hCountry.Text = "Country";
-            this.hCountry.Width = 93;
+            this.hCountry.Width = 80;
             // 
             // hOS
             // 
+            this.hOS.Tag = "Text";
             this.hOS.Text = "Operating System";
-            this.hOS.Width = 157;
+            this.hOS.Width = 117;
             // 
             // hAccountType
             // 
+            this.hAccountType.Tag = "Text";
             this.hAccountType.Text = "Account Type";
             this.hAccountType.Width = 100;
             // 
@@ -741,14 +765,6 @@ namespace xServer.Forms
             this.menuAbout.Index = 5;
             this.menuAbout.Text = "About";
             this.menuAbout.Click += new System.EventHandler(this.menuAbout_Click);
-            // 
-            // runJoinCommandsToolStripMenuItem
-            // 
-            this.runJoinCommandsToolStripMenuItem.Image = global::xServer.Properties.Resources.refresh;
-            this.runJoinCommandsToolStripMenuItem.Name = "runJoinCommandsToolStripMenuItem";
-            this.runJoinCommandsToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
-            this.runJoinCommandsToolStripMenuItem.Text = "Run Join Commands";
-            this.runJoinCommandsToolStripMenuItem.Click += new System.EventHandler(this.runJoinCommandsToolStripMenuItem_Click);
             // 
             // FrmMain
             // 
@@ -828,6 +844,7 @@ namespace xServer.Forms
         private System.Windows.Forms.ToolStripMenuItem selectAllClientsToolStripMenuItem;
         private System.Windows.Forms.MenuItem menuJoinCommands;
         private System.Windows.Forms.ToolStripMenuItem runJoinCommandsToolStripMenuItem;
+        private System.Windows.Forms.ColumnHeader hClientID;
     }
 }
 

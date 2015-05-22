@@ -73,6 +73,7 @@
     <Compile Include="Core\Compression\SafeQuickLZ.cs" />
     <Compile Include="Core\Encryption\AES.cs" />
     <Compile Include="Core\Helper\FileSplit.cs" />
+    <Compile Include="Core\Helper\Sorter.cs" />
     <Compile Include="Core\Helper\UnsafeStreamCodec.cs" />
     <Compile Include="Core\Helper\UPnP.cs" />
     <Compile Include="Core\Misc\InputBox.cs" />

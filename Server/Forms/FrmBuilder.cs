@@ -53,6 +53,7 @@ namespace xServer.Forms
             txtOriginalFilename.Text = pm.ReadValue("OriginalFilename");
             txtProductVersion.Text = pm.ReadValue("ProductVersion");
             txtFileVersion.Text = pm.ReadValue("FileVersion");
+            txtClientID.Text = pm.ReadValue("ClientID");
             _loadedProfile = true;
         }
 
@@ -83,6 +84,7 @@ namespace xServer.Forms
             pm.WriteValue("OriginalFilename", txtOriginalFilename.Text);
             pm.WriteValue("ProductVersion", txtProductVersion.Text);
             pm.WriteValue("FileVersion", txtFileVersion.Text);
+            pm.WriteValue("ClientID", txtClientID.Text);
         }
 
         private void FrmBuilder_Load(object sender, EventArgs e)
@@ -219,6 +221,11 @@ namespace xServer.Forms
             ToggleAsmInfoControls();
         }
 
+        private void txtClientID_TextChanged(object sender, EventArgs e)
+        {
+            HasChanged();
+        }
+
         private void RefreshExamplePath()
         {
             string path = string.Empty;
@@ -249,7 +256,8 @@ namespace xServer.Forms
                 !chkInstall.Checked ||
                 (chkInstall.Checked && !string.IsNullOrEmpty(txtInstallname.Text) &&
                  !string.IsNullOrEmpty(txtInstallsub.Text)) && // Installation Options
-                !chkStartup.Checked || (chkStartup.Checked && !string.IsNullOrEmpty(txtRegistryKeyName.Text)))
+                !chkStartup.Checked || (chkStartup.Checked && !string.IsNullOrEmpty(txtRegistryKeyName.Text))
+                && !string.IsNullOrEmpty(txtClientID.Text)) // Client id
                 // Persistence and Registry Features
             {
                 string output = string.Empty;
@@ -302,7 +310,7 @@ namespace xServer.Forms
                             asmInfo[7] = txtFileVersion.Text;
                         }
 
-                        ClientBuilder.Build(output, txtHost.Text, txtPassword.Text, txtInstallsub.Text,
+                        ClientBuilder.Build(output, txtHost.Text, txtPassword.Text, txtClientID.Text, txtInstallsub.Text,
                             txtInstallname.Text + ".exe", txtMutex.Text, txtRegistryKeyName.Text, chkInstall.Checked,
                             chkStartup.Checked, chkHide.Checked, chkKeylogger.Checked, int.Parse(txtPort.Text),
                             int.Parse(txtDelay.Text),
@@ -456,5 +464,7 @@ namespace xServer.Forms
         {
             HasChanged();
         }
+
+
     }
 }

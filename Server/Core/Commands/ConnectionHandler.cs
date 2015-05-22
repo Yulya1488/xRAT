@@ -26,6 +26,8 @@ namespace xServer.Core.Commands
                     client.Value.Region = packet.Region;
                     client.Value.City = packet.City;
                     client.Value.Id = packet.Id;
+                    // Set the client id on the user state to the packet client id.
+                    client.Value.ClientId = packet.ClientId;
 
                     if (!FrmMain.Instance.ListenServer.AllTimeConnectedClients.ContainsKey(client.Value.Id))
                         FrmMain.Instance.ListenServer.AllTimeConnectedClients.Add(client.Value.Id, DateTime.Now);
@@ -39,7 +41,7 @@ namespace xServer.Core.Commands
                     // this " " leaves some space between the flag-icon and the IP
                     ListViewItem lvi = new ListViewItem(new string[]
                     {
-                        " " + client.EndPoint.Address.ToString(), client.EndPoint.Port.ToString(), client.Value.Version,
+                        " " + client.EndPoint.Address.ToString(), client.Value.ClientId, client.EndPoint.Port.ToString(), client.Value.Version,
                         "Connected",
                         "Active", country, client.Value.OperatingSystem, client.Value.AccountType
                     }) { Tag = client, ImageIndex = packet.ImageIndex };

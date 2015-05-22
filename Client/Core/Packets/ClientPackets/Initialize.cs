@@ -32,12 +32,15 @@ namespace xClient.Core.Packets.ClientPackets
         [ProtoMember(9)]
         public string Id { get; set; }
 
+        [ProtoMember(10)]
+        public string ClientId { get; set; }
+
         public Initialize()
         {
         }
 
         public Initialize(string version, string operatingsystem, string accounttype, string country, string countrycode,
-            string region, string city, int imageindex, string id)
+            string region, string city, int imageindex, string id, string clientId)
         {
             Version = version;
             OperatingSystem = operatingsystem;
@@ -48,6 +51,7 @@ namespace xClient.Core.Packets.ClientPackets
             City = city;
             ImageIndex = imageindex;
             Id = id;
+            ClientId = clientId;
         }
 
         public void Execute(Client client)

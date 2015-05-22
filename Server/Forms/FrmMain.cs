@@ -17,8 +17,8 @@ namespace xServer.Forms
     public partial class FrmMain : Form
     {
         public Server ListenServer;
-        private readonly ListViewColumnSorter _lvwColumnSorter;
         public static volatile FrmMain Instance;
+        private readonly Sorter lvwColumnSorter;
 
         private void ReadSettings(bool writeIfNotExist = true)
         {
@@ -71,8 +71,8 @@ namespace xServer.Forms
 
             this.Menu = mainMenu;
 
-            _lvwColumnSorter = new ListViewColumnSorter();
-            lstClients.ListViewItemSorter = _lvwColumnSorter;
+            lvwColumnSorter = new Sorter();
+            lstClients.ListViewItemSorter = this.lvwColumnSorter;
 
             ListViewExtensions.RemoveDots(lstClients);
             ListViewExtensions.ChangeTheme(lstClients);
@@ -313,23 +313,33 @@ namespace xServer.Forms
 
         private void lstClients_ColumnClick(object sender, ColumnClickEventArgs e)
         {
-            // Determine if clicked column is already the column that is being sorted.
-            if (e.Column == _lvwColumnSorter.SortColumn)
+            Sorter sorter = (Sorter)lstClients.ListViewItemSorter;
+            if (sorter == null)
             {
-                // Reverse the current sort direction for this column.
-                if (_lvwColumnSorter.Order == SortOrder.Ascending)
-                    _lvwColumnSorter.Order = SortOrder.Descending;
+                lstClients.ListViewItemSorter = this.lvwColumnSorter;
+                Sorter sorter2 = (Sorter)lstClients.ListViewItemSorter;
+                sorter2.Column = e.Column;
+                if (sorter2.Order == SortOrder.Ascending)
+                {
+                    sorter2.Order = SortOrder.Descending;
+                }
                 else
-                    _lvwColumnSorter.Order = SortOrder.Ascending;
+                {
+                    sorter2.Order = SortOrder.Ascending;
+                }
             }
             else
             {
-                // Set the column number that is to be sorted; default to ascending.
-                _lvwColumnSorter.SortColumn = e.Column;
-                _lvwColumnSorter.Order = SortOrder.Ascending;
+                sorter.Column = e.Column;
+                if (sorter.Order == SortOrder.Ascending)
+                {
+                    sorter.Order = SortOrder.Descending;
+                }
+                else
+                {
+                    sorter.Order = SortOrder.Ascending;
+                }
             }
-
-            // Perform the sort with these new sort options.
             lstClients.Sort();
         }
 
