@@ -135,6 +135,7 @@
             this.txtDelay.Size = new System.Drawing.Size(66, 22);
             this.txtDelay.TabIndex = 8;
             this.txtDelay.Text = "5000";
+            this.txtDelay.TextChanged += new System.EventHandler(this.txtDelay_TextChanged);
             this.txtDelay.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtDelay_KeyPress);
             // 
             // lblDelay
