@@ -80,7 +80,7 @@ namespace xServer.Core.Commands
                     Client c = (Client)lvi.Tag;
                     if (client == c)
                     {
-                        lvi.SubItems[3].Text = packet.Message;
+                        lvi.SubItems[4].Text = packet.Message;
                         break;
                     }
                 }
