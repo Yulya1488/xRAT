@@ -74,8 +74,8 @@ namespace xServer.Forms
             lvwColumnSorter = new Sorter();
             lstClients.ListViewItemSorter = this.lvwColumnSorter;
 
-            ListViewExtensions.RemoveDots(lstClients);
-            ListViewExtensions.ChangeTheme(lstClients);
+            lstClients.RemoveDots();
+            lstClients.ChangeTheme();
         }
 
         public void UpdateWindowTitle(int count, int selected)
