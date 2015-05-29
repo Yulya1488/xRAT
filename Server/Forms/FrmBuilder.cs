@@ -11,6 +11,7 @@ namespace xServer.Forms
 {
     public partial class FrmBuilder : Form
     {
+        private bool _profileLoaded;
         private bool _changed;
         public FrmBuilder()
         {
@@ -19,7 +20,7 @@ namespace xServer.Forms
 
         private void HasChanged()
         {
-            if (!_changed)
+            if (!_changed && _profileLoaded)
                 _changed = true;
         }
 
@@ -63,6 +64,7 @@ namespace xServer.Forms
             txtProductVersion.Text = pm.ReadValue("ProductVersion");
             txtFileVersion.Text = pm.ReadValue("FileVersion");
             txtClientID.Text = pm.ReadValue("ClientID");
+            _profileLoaded = true;
         }
 
         private void SaveProfile(string profilename)

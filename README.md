@@ -51,22 +51,19 @@ Building a client
 
 ToDo
 ---
-* ~~Reverse SOCKS5/HTTPS Proxy~~
-* Password Recovery (Browsers, FTP-Clients)
+* Registry Editor (browse, delete, add registry keys)
+* Password Recovery
+ * Recover Passwords of common browsers (i.e. Chrome, Firefox, IE) and FTP-Clients (i.e. FileZilla Client)
 * Startup Persistence
 * [Issues](https://github.com/MaxXor/xRAT/issues)
 
 Contributing
 ---
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+See [CONTRIBUTING.md](/CONTRIBUTING.md)
 
 License
 ---
-See LICENSE file for details.
+See [LICENSE.md](/LICENSE.md)
 
 Donate
 ---

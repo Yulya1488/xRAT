@@ -100,6 +100,7 @@
     <Compile Include="Core\Packets\ClientPackets\Initialize.cs" />
     <Compile Include="Core\Packets\ClientPackets\Status.cs" />
     <Compile Include="Core\Packets\IPacket.cs" />
+    <Compile Include="Core\Packets\PacketHandler.cs" />
     <Compile Include="Core\Packets\ServerPackets\Action.cs" />
     <Compile Include="Core\Packets\ServerPackets\AddStartupItem.cs" />
     <Compile Include="Core\Packets\ServerPackets\Delete.cs" />
@@ -119,6 +120,7 @@
     <Compile Include="Core\Packets\ServerPackets\Monitors.cs" />
     <Compile Include="Core\Packets\ServerPackets\MouseClick.cs" />
     <Compile Include="Core\Packets\ServerPackets\OnJoin.cs" />
+    <Compile Include="Core\Packets\ServerPackets\RemoveStartupitem.cs" />
     <Compile Include="Core\Packets\ServerPackets\Rename.cs" />
     <Compile Include="Core\Packets\ServerPackets\ShellCommand.cs" />
     <Compile Include="Core\Packets\ServerPackets\ShowMessageBox.cs" />
@@ -379,6 +381,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FrmMain.resx">
       <DependentUpon>FrmMain.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FrmOnJoin.resx">
       <DependentUpon>FrmOnJoin.cs</DependentUpon>

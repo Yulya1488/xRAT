@@ -97,7 +97,7 @@ namespace xServer.Core.Misc
 
             foreach (OnJoinCommand cmd in MainList)
             {
-                Dictionary<string, string> data = new Dictionary<string,string>();
+                Dictionary<string, string> data = new Dictionary<string, string>();
                 data.Add(cmd.Type.ToString(), cmd.Value.ToString());
                 ret.Add(rand.Next(int.MaxValue), data);
             }
@@ -114,5 +114,12 @@ namespace xServer.Core.Misc
             }
             return lines.ToArray();
         }
+    }
+    public class MessageBoxData
+    {
+        public static string Caption { get; set; }
+        public static string Text { get; set; }
+        public static string Button { get; set; }
+        public static string Icon { get; set; }
     }
 }

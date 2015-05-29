@@ -45,6 +45,7 @@ namespace xServer.Forms
             this.ctxtTaskManager = new System.Windows.Forms.ToolStripMenuItem();
             this.ctxtRemoteShell = new System.Windows.Forms.ToolStripMenuItem();
             this.ctxtReverseProxy = new System.Windows.Forms.ToolStripMenuItem();
+            this.ctxtRegistryEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.ctxtLine = new System.Windows.Forms.ToolStripSeparator();
             this.ctxtActions = new System.Windows.Forms.ToolStripMenuItem();
             this.ctxtShutdown = new System.Windows.Forms.ToolStripMenuItem();
@@ -154,6 +155,7 @@ namespace xServer.Forms
             this.ctxtTaskManager,
             this.ctxtRemoteShell,
             this.ctxtReverseProxy,
+            this.ctxtRegistryEditor,
             this.ctxtLine,
             this.ctxtActions});
             this.ctxtSystem.Image = ((System.Drawing.Image)(resources.GetObject("ctxtSystem.Image")));
@@ -203,10 +205,20 @@ namespace xServer.Forms
             // 
             // ctxtReverseProxy
             // 
+            this.ctxtReverseProxy.Image = global::xServer.Properties.Resources.server_link;
             this.ctxtReverseProxy.Name = "ctxtReverseProxy";
             this.ctxtReverseProxy.Size = new System.Drawing.Size(173, 22);
             this.ctxtReverseProxy.Text = "Reverse Proxy";
             this.ctxtReverseProxy.Click += new System.EventHandler(this.ctxtReverseProxy_Click);
+            // 
+            // ctxtRegistryEditor
+            // 
+            this.ctxtRegistryEditor.Enabled = false;
+            this.ctxtRegistryEditor.Image = global::xServer.Properties.Resources.registry;
+            this.ctxtRegistryEditor.Name = "ctxtRegistryEditor";
+            this.ctxtRegistryEditor.Size = new System.Drawing.Size(173, 22);
+            this.ctxtRegistryEditor.Text = "Registry Editor";
+            this.ctxtRegistryEditor.Click += new System.EventHandler(this.ctxtRegistryEditor_Click);
             // 
             // ctxtLine
             // 
@@ -361,7 +373,7 @@ namespace xServer.Forms
             // 
             this.botStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.botListen});
-            this.botStrip.Location = new System.Drawing.Point(0, 366);
+            this.botStrip.Location = new System.Drawing.Point(0, 367);
             this.botStrip.Name = "botStrip";
             this.botStrip.Size = new System.Drawing.Size(770, 22);
             this.botStrip.TabIndex = 4;
@@ -635,6 +647,9 @@ namespace xServer.Forms
             // 
             // lstClients
             // 
+            this.lstClients.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lstClients.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.hIP,
             this.hClientID,
@@ -646,13 +661,12 @@ namespace xServer.Forms
             this.hOS,
             this.hAccountType});
             this.lstClients.ContextMenuStrip = this.ctxtMenu;
-            this.lstClients.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lstClients.FullRowSelect = true;
             this.lstClients.GridLines = true;
             this.lstClients.Location = new System.Drawing.Point(0, 0);
             this.lstClients.Name = "lstClients";
             this.lstClients.ShowItemToolTips = true;
-            this.lstClients.Size = new System.Drawing.Size(770, 388);
+            this.lstClients.Size = new System.Drawing.Size(770, 365);
             this.lstClients.SmallImageList = this.imgFlags;
             this.lstClients.TabIndex = 1;
             this.lstClients.UseCompatibleStateImageBehavior = false;
@@ -770,12 +784,13 @@ namespace xServer.Forms
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(770, 388);
+            this.ClientSize = new System.Drawing.Size(770, 389);
             this.Controls.Add(this.botStrip);
             this.Controls.Add(this.lstClients);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.Black;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Menu = this.mainMenu;
             this.MinimumSize = new System.Drawing.Size(680, 415);
             this.Name = "FrmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -845,6 +860,7 @@ namespace xServer.Forms
         private System.Windows.Forms.MenuItem menuJoinCommands;
         private System.Windows.Forms.ToolStripMenuItem runJoinCommandsToolStripMenuItem;
         private System.Windows.Forms.ColumnHeader hClientID;
+        private System.Windows.Forms.ToolStripMenuItem ctxtRegistryEditor;
     }
 }
 

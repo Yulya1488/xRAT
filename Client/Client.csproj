@@ -128,6 +128,7 @@
     <Compile Include="Core\Packets\ClientPackets\MonitorsResponse.cs" />
     <Compile Include="Core\Packets\ClientPackets\ShellCommandResponse.cs" />
     <Compile Include="Core\Packets\ClientPackets\UserStatus.cs" />
+    <Compile Include="Core\Packets\PacketHandler.cs" />
     <Compile Include="Core\Packets\ServerPackets\Action.cs" />
     <Compile Include="Core\Packets\ServerPackets\AddStartupItem.cs" />
     <Compile Include="Core\Packets\ServerPackets\Delete.cs" />
@@ -144,6 +145,7 @@
     <Compile Include="Core\Packets\ServerPackets\KillProcess.cs" />
     <Compile Include="Core\Packets\ServerPackets\Monitors.cs" />
     <Compile Include="Core\Packets\ServerPackets\OnJoin.cs" />
+    <Compile Include="Core\Packets\ServerPackets\RemoveStartupitem.cs" />
     <Compile Include="Core\Packets\ServerPackets\Rename.cs" />
     <Compile Include="Core\Packets\ServerPackets\ShellCommand.cs" />
     <Compile Include="Core\Packets\ServerPackets\ShowMessageBox.cs" />
