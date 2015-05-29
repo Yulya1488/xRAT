@@ -100,7 +100,7 @@ namespace xServer.Forms
             this.toolStripSeparator1,
             this.selectAllClientsToolStripMenuItem});
             this.ctxtMenu.Name = "ctxtMenu";
-            this.ctxtMenu.Size = new System.Drawing.Size(159, 120);
+            this.ctxtMenu.Size = new System.Drawing.Size(159, 142);
             // 
             // ctxtConnection
             // 
@@ -790,7 +790,6 @@ namespace xServer.Forms
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.Black;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Menu = this.mainMenu;
             this.MinimumSize = new System.Drawing.Size(680, 415);
             this.Name = "FrmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

