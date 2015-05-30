@@ -261,8 +261,13 @@ namespace xServer.Forms
         private Client[] GetSelectedClients()
         {
             List<Client> clients = new List<Client>();
+            int selectedCount = 0;
+            this.Invoke(new MethodInvoker(delegate()
+            {
+                selectedCount = lstClients.SelectedItems.Count;
+            }));
 
-            if (lstClients.SelectedItems.Count == 0) return clients.ToArray();
+            if (selectedCount == 0) return clients.ToArray();
 
             lstClients.Invoke((MethodInvoker)delegate
             {

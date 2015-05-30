@@ -22,17 +22,18 @@ Features
 * Visit Website (hidden & visible)
 * Show Messagebox
 * Task Manager
-* File Manager
+* File Manager (featuring zipping a directory)
 * Startup Manager
 * Remote Desktop
 * Remote Shell
-* Download & Execute
-* Upload & Execute
+* Download & Execute (RunPE, or dropping)
+* Upload & Execute (RunPE, or dropping)
 * System Information
 * Computer Commands (Restart, Shutdown, Standby)
 * Keylogger
 * Reverse SOCKS5/HTTPS Proxy
-
+* Join Commands
+* Password Recovery (Firefox, Internet Explorer, Chrome, Yandex, Opera)
 Compiling
 ---
 Open the project in Visual Studio and click build, or use one of the batch files included in the root directory.
@@ -52,8 +53,6 @@ Building a client
 ToDo
 ---
 * Registry Editor (browse, delete, add registry keys)
-* Password Recovery
- * Recover Passwords of common browsers (i.e. Chrome, Firefox, IE) and FTP-Clients (i.e. FileZilla Client)
 * Startup Persistence
 * [Issues](https://github.com/MaxXor/xRAT/issues)
 

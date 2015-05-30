@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using xServer.Controls;
 
 namespace xServer.Core.Extensions
 {

